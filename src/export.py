@@ -29,7 +29,6 @@ INTELLIGENCE_COLUMNS = [
     "why_this_lead",
     "outreach_priority",
     "confidence",
-    "llm_outreach_priority",
 ]
 
 EMAIL_COLUMNS = [
@@ -37,14 +36,16 @@ EMAIL_COLUMNS = [
     "company",
     "outreach_priority",
     "subject",
+    "first_email_angle",
     "body",
     "human_angle_used",
-    "colorkaar_angle_used",
     "conversation_starter_used",
     "confidence",
 ]
 
-LIST_FIELDS = {"operating_model", "studio_personality", "creative_dna", "visual_dna", "buyer_personality", "avoid", "why_this_lead"}
+# llm_outreach_priority is intentionally excluded here (kept in the .jsonl
+# for audit, per CLAUDE.md) - the exported CSV has one source of truth.
+LIST_FIELDS = {"studio_personality", "creative_dna", "visual_dna", "buyer_personality", "avoid", "why_this_lead"}
 
 
 def load_jsonl(path: Path) -> list[dict]:

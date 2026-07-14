@@ -128,12 +128,25 @@ Human Angle is exactly one thing, not three. "Founder-led boutique" is good.
 "Award-winning, passionate, visual storytellers" is the failure mode this
 whole system exists to prevent.
 
-Never let a field turn back into a sentence. `creative_dna`, `visual_dna`,
-`operating_model`, `studio_personality`, `buyer_personality`, and `avoid`
-are all short tag arrays — 2-5 words each, not clauses. `colorkaar_angle` is
-a phrase, not a sentence with an em-dash explaining itself. `creative_dna`
-is aesthetic vocabulary (Minimal, Raw, Naturalistic, Luxury...), never a
-market/industry word (Outdoor, Automotive, Tech, Retail) — market context
-belongs in the raw evidence, not in this field. `confidence` and
-`outreach_priority` are categories (High/Medium/Low,
-Immediate/High/Medium/Low) — never a number, ever again.
+Never let a field turn back into a sentence. `avoid` and `why_this_lead` are
+short tag arrays, free text. `operating_model` is a single short fact — not
+an array, and never a restatement of `studio_archetype` (that redundancy
+was the whole field's first-draft flaw). `colorkaar_angle` and
+`first_email_angle` are phrases, not sentences with an em-dash explaining
+themselves. `confidence` and `outreach_priority` are categories
+(High/Medium/Low, Immediate/High/Medium/Low) — never a number, ever again.
+
+`studio_personality`, `creative_dna`, `visual_dna`, and `buyer_personality`
+are **closed vocabularies**, enforced as JSON Schema `enum`s in
+`schemas/intelligence.schema.json` — the model cannot output a value
+outside the list even if it tries. This is what makes the database
+searchable instead of just readable: "find every Independent, Image-first,
+Luxury, Founder-led lead" only works if those four fields draw from a fixed
+set. `creative_dna` in particular answers "what kind of creative work
+excites them," not "what does this studio's website look like" — it can
+legitimately include a vertical like Luxury or Automotive when that's a
+genuine creative specialty, which is different from restating the client
+industry. If you add a value to one of these lists, update it in both the
+schema (enforced) and `prompts/system.md` (documented) — they must stay in
+sync, same discipline as the archetype rubric in `prompts/scorer.md` and
+`src/score.py`.

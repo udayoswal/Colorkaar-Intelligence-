@@ -19,6 +19,7 @@ SCHEMA_PATH = ROOT / "schemas" / "email.schema.json"
 TEMPLATE_FIELDS = [
     "company",
     "studio_archetype",
+    "operating_model",
     "decision_maker",
     "human_angle",
     "colorkaar_angle",
@@ -28,7 +29,7 @@ TEMPLATE_FIELDS = [
     "contact_name",
     "contact_title",
 ]
-LIST_FIELDS = ["operating_model", "studio_personality", "creative_dna", "visual_dna", "buyer_personality", "avoid", "why_this_lead"]
+LIST_FIELDS = ["studio_personality", "creative_dna", "visual_dna", "buyer_personality", "avoid", "why_this_lead"]
 
 
 def load_contacts(leads_csv: Path) -> dict[str, dict]:

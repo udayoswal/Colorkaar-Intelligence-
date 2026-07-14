@@ -46,3 +46,7 @@ notice during the "review the first 25" step. But the exported priority
 always comes from this table, because a fixed rubric is auditable and can
 be re-tuned in one place, instead of re-prompting 1,469 leads every time the
 definition of "Immediate" changes.
+
+`llm_outreach_priority` lives in `output/lead_intelligence.scored.jsonl` for
+that audit purpose only — `src/export.py` deliberately drops it from the
+final CSV. The exported deliverable has one column for priority, not two.

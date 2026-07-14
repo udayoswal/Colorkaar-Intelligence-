@@ -34,6 +34,14 @@ at all, and `conversation_starter` as the opening topic — but do not just
 paste those fields in verbatim. Write the email a person would actually
 send.
 
+First, decide `first_email_angle`: the short, punchy phrase (3-8 words) that
+is the actual emotional bridge for *this* email. Most of the time this is a
+tactical rendering of `colorkaar_angle` — but intelligence is evergreen and
+this email is one specific touchpoint, so if `human_angle` or
+`why_this_lead` is a stronger hook for this particular outreach, use that
+instead. Decide this before writing the body; the body should read like it
+was written around this one phrase, not the other way around.
+
 Never mention: awards, festival selections, named clients, specific
 campaigns, "storytelling," "passion," "innovation," "creativity." These
 rules carry over from the intelligence stage — an email that violates them

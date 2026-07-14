@@ -29,24 +29,32 @@
       "description": "One short phrase: founder-led boutique, DP-led, agency, huge production company, or unknown."
     },
     "operating_model": {
-      "type": "array",
-      "items": { "type": "string" },
-      "description": "2-3 short tags, not a sentence. e.g. [\"Founder-led boutique\", \"Owner-operated\"]. Empty array if unsupported."
+      "type": "string",
+      "description": "ONE short structural fact not already implied by studio_archetype - e.g. \"Owner-operated\", \"In-house production and post\", \"Two-person crew\". Do not restate studio_archetype here. UNKNOWN if nothing distinct is supported."
     },
     "studio_personality": {
       "type": "array",
-      "items": { "type": "string" },
-      "description": "2-3 short tags describing how you'd work with them day to day. e.g. [\"Independent\", \"Hands-on\", \"Relationship-driven\"] or [\"Structured\", \"Process-driven\", \"Scalable\"]. Empty array if unsupported."
+      "items": {
+        "type": "string",
+        "enum": ["Independent", "Boutique", "Hands-on", "Relationship-driven", "Structured", "Collaborative", "Scalable", "Experimental", "Image-first"]
+      },
+      "description": "1-3 tags from the closed vocabulary describing how you'd work with them day to day. Empty array if none fit."
     },
     "creative_dna": {
       "type": "array",
-      "items": { "type": "string" },
-      "description": "Aesthetic sensibility, NOT market or industry. Good: Minimal, Raw, Performance, Luxury, Character-driven, Adventure, Naturalistic, Lifestyle, Graphic. Bad: Outdoor, Automotive, Tech, Retail - those are markets, not creative DNA. 2-4 tags. Empty array if unsupported."
+      "items": {
+        "type": "string",
+        "enum": ["Luxury", "Fashion", "Beauty", "Food", "Travel", "Outdoor", "Sports", "Music", "Narrative", "Documentary", "Comedy", "Automotive", "Architecture", "Corporate"]
+      },
+      "description": "1-3 tags from the closed vocabulary answering: what kind of creative work excites them? A genuine creative specialty, not a restatement of what their clients happen to sell. Empty array if none fit."
     },
     "visual_dna": {
       "type": "array",
-      "items": { "type": "string" },
-      "description": "Visual style as single/double-word tags. Good: Naturalistic, Filmic, Textured, Restrained, Graphic, Clean, Elegant, Bold, Raw. Bad: full sentences describing an image. Max 5 tags. Empty array if unsupported."
+      "items": {
+        "type": "string",
+        "enum": ["Naturalistic", "Graphic", "Bold", "Filmic", "Minimal", "Textured", "Controlled", "Organic", "Raw", "Elegant"]
+      },
+      "description": "1-3 tags from the closed vocabulary describing the actual look - the vocabulary a colorist would use to start a grade. Empty array if none fit."
     },
     "decision_maker": {
       "type": "string",
@@ -54,8 +62,11 @@
     },
     "buyer_personality": {
       "type": "array",
-      "items": { "type": "string" },
-      "description": "2-3 short tags on how they evaluate and decide. e.g. [\"Relationship-driven\", \"Craft-first\", \"Founder-led decisions\"]. Empty array if unsupported."
+      "items": {
+        "type": "string",
+        "enum": ["Relationship-driven", "Craft-first", "Process-driven", "Schedule-driven", "Quality-first", "Founder-led", "Collaborative", "Risk-averse"]
+      },
+      "description": "1-3 tags from the closed vocabulary on how they evaluate and decide. Empty array if none fit."
     },
     "human_angle": {
       "type": "string",
@@ -72,12 +83,12 @@
     "avoid": {
       "type": "array",
       "items": { "type": "string" },
-      "description": "Short tags (1-3 words each) for topics/tones that would misread the room. e.g. [\"Pricing\", \"Awards\", \"Volume framing\"]. Not sentences."
+      "description": "Short tags (1-3 words each) for topics/tones that would misread the room. e.g. [\"Pricing\", \"Awards\", \"Volume framing\"]. Not sentences. Free text - situational, not a closed vocabulary."
     },
     "why_this_lead": {
       "type": "array",
       "items": { "type": "string" },
-      "description": "3-5 short bullets synthesizing the case for outreach - the gut-check a producer reads before deciding whether to write at all. e.g. [\"Founder-led\", \"Image-first\", \"No internal grading\", \"Relationship-driven\"]."
+      "description": "3-5 short bullets synthesizing the case for outreach - the gut-check a producer reads before deciding whether to write at all. Can reuse tags from other fields plus specific facts. e.g. [\"Founder-led\", \"Image-first\", \"No internal grading\", \"Relationship-driven\"]."
     },
     "outreach_priority": {
       "type": "string",

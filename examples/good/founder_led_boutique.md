@@ -19,12 +19,12 @@ Projects: Outdoor apparel campaigns, a handful of documentary shorts.
 {
   "company": "Northlight Films",
   "studio_archetype": "founder-led boutique",
-  "operating_model": ["Founder-led boutique", "Owner-operated"],
+  "operating_model": "Owner-operated",
   "studio_personality": ["Independent", "Hands-on", "Relationship-driven"],
-  "creative_dna": ["Naturalistic", "Restrained"],
-  "visual_dna": ["Desaturated", "High-contrast", "Clean"],
+  "creative_dna": ["Outdoor"],
+  "visual_dna": ["Naturalistic", "Raw"],
   "decision_maker": "Founder (Mara)",
-  "buyer_personality": ["Relationship-driven", "Fast decisions"],
+  "buyer_personality": ["Relationship-driven", "Founder-led"],
   "human_angle": "Founder still shoots",
   "colorkaar_angle": "A long-term partner, not a vendor",
   "conversation_starter": "Developing a consistent look on location",
@@ -38,8 +38,11 @@ Projects: Outdoor apparel campaigns, a handful of documentary shorts.
 
 This is good because: `human_angle` is exactly one concrete thing, not a
 list of adjectives. `colorkaar_angle` is four words, not a sentence that
-explains itself. `creative_dna` is aesthetic ("Naturalistic," "Restrained")
-rather than market ("outdoor," "apparel") — the market context lives in the
-raw evidence, not in this field. Every array field is short tags, not
-clauses. `confidence` and `outreach_priority` are categories, not numbers.
-Nothing here mentions awards, named clients, or "storytelling."
+explains itself. `operating_model` is "Owner-operated," not a restatement
+of `studio_archetype` — the founder-led-boutique fact is already carried by
+`studio_archetype`, so this field earns its place with something new.
+`creative_dna`, `visual_dna`, `studio_personality`, and `buyer_personality`
+are each drawn from the closed vocabulary in `prompts/system.md` — nothing
+invented, nothing outside the list. `confidence` and `outreach_priority`
+are categories, not numbers. Nothing here mentions awards, named clients,
+or "storytelling."

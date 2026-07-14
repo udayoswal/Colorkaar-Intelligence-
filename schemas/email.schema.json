@@ -4,9 +4,9 @@
   "required": [
     "company",
     "subject",
+    "first_email_angle",
     "body",
     "human_angle_used",
-    "colorkaar_angle_used",
     "conversation_starter_used",
     "confidence",
     "reasoning"
@@ -20,6 +20,10 @@
       "type": "string",
       "description": "Short, specific, not salesy. No exclamation points."
     },
+    "first_email_angle": {
+      "type": "string",
+      "description": "The short, punchy emotional bridge between the intelligence profile and this specific email - roughly 3-8 words. Usually a tactical, campaign-specific rendering of colorkaar_angle, but chosen fresh for this outreach and free to draw on human_angle or why_this_lead instead if that's the stronger hook this time. e.g. \"Protecting the look established in camera.\""
+    },
     "body": {
       "type": "string",
       "description": "The email body. Human, minimal, confident, founder-led, professional, relationship-first. Never salesy."
@@ -27,10 +31,6 @@
     "human_angle_used": {
       "type": "string",
       "description": "The human_angle this email was actually built around."
-    },
-    "colorkaar_angle_used": {
-      "type": "string",
-      "description": "The colorkaar_angle this email was actually built around."
     },
     "conversation_starter_used": {
       "type": "string",

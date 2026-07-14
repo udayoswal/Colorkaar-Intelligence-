@@ -40,7 +40,7 @@ Work through the evidence in this order before writing any output:
    client-logo brag. It is not signal for this analysis.
 8. Decide `studio_archetype`, `operating_model`, `studio_personality`,
    `decision_maker`, `buyer_personality`.
-9. Decide `creative_dna` and `visual_dna` — aesthetic, not market (see below).
+9. Decide `creative_dna` and `visual_dna` from the closed vocabularies below.
 10. Decide `human_angle` — exactly one thing.
 11. Decide `colorkaar_angle` and `conversation_starter`.
 12. Decide `avoid`.
@@ -57,42 +57,60 @@ director/cinematographer partnership or DP-led shop), agency, huge
 production company, or unknown. Base this on operating model and decision
 maker, not on size claims in marketing copy.
 
-## Operating model — short tags, not a sentence
+## Controlled vocabularies
 
-2-3 tags describing the structural facts. Good: ["Founder-led boutique",
-"Owner-operated"]. Bad: "Small team, founder-directed, founder shoots
-personally on most projects."
+`studio_personality`, `creative_dna`, `visual_dna`, and `buyer_personality`
+are each constrained to a fixed, closed list — the schema itself will
+reject anything outside it. This is deliberate: a free-text tag field
+invents endless near-duplicate variations ("Craft-focused," "Craft-first,"
+"Craft-driven") and stops being searchable. A closed vocabulary is what
+makes 1,469 rows into a queryable database instead of 1,469 slightly
+different essays. Pick 1-3 values per field that genuinely fit; if nothing
+in the list fits the evidence, leave the array empty — do not force a
+weak match, and do not invent a value outside the list (the API will
+reject it anyway).
+
+Keep these four lists in sync with `schemas/intelligence.schema.json` if
+you ever change them — the schema enum is what's actually enforced; this
+is the human-readable copy.
+
+## Operating model — ONE fact, not a restatement of archetype
+
+A single short structural fact — not a tag array, not a sentence, and not
+a restatement of `studio_archetype`. If `studio_archetype` is "founder-led
+boutique," `operating_model` should not also say "Founder-led boutique" —
+say something it doesn't already imply: "Owner-operated," "In-house
+production and post," "Two-person crew." UNKNOWN if nothing distinct is
+supported.
 
 ## Studio personality — how you'd actually work with them
 
-2-3 tags. This is different from `buyer_personality`: operating model is the
-structural fact, studio personality is the character of working with them
-day to day. Independent/boutique studios: ["Independent", "Hands-on",
-"Relationship-driven"]. Structured shops: ["Structured", "Process-driven",
-"Scalable"].
+1-3 tags from: Independent, Boutique, Hands-on, Relationship-driven,
+Structured, Collaborative, Scalable, Experimental, Image-first. This is
+different from `buyer_personality`: operating model is the structural fact,
+studio personality is the character of working with them day to day.
+Independent/boutique studios: Independent, Hands-on, Relationship-driven.
+Structured shops: Structured, Collaborative, Scalable.
 
-## Creative DNA — aesthetic, not market
+## Creative DNA — what kind of creative work excites them
 
-`creative_dna` is a sensibility, never an industry. "Outdoor," "automotive,"
-"tech," and "retail" are markets — they describe *what* a client sells, not
-how this studio sees. Reach for words like: Minimal, Raw, Performance,
-Luxury, Character-driven, Adventure, Naturalistic, Lifestyle, Graphic. 2-4
-tags. If the evidence only supports a market description and no aesthetic
-one, leave this array empty rather than defaulting to the market word.
+1-3 tags from: Luxury, Fashion, Beauty, Food, Travel, Outdoor, Sports,
+Music, Narrative, Documentary, Comedy, Automotive, Architecture, Corporate.
+This answers "what kind of creative work excites them" — a genuine creative
+specialty, not a restatement of what their clients happen to sell. A studio
+whose actual creative passion is automotive work gets "Automotive"; a
+generalist studio that has shot one car spot for a client does not.
 
-## Visual DNA — five words, done
+## Visual DNA — the vocabulary a colorist would use
 
-Single or double-word tags describing the actual look: Naturalistic,
-Filmic, Textured, Restrained, Graphic, Clean, Elegant, Bold, Raw. This is
-not you describing an image in prose — it's the vocabulary a colorist would
-use to start a grade. Max 5 tags.
+1-3 tags from: Naturalistic, Graphic, Bold, Filmic, Minimal, Textured,
+Controlled, Organic, Raw, Elegant. This is not you describing an image in
+prose — it's the shorthand a colorist would use to start a grade.
 
-## Buyer personality — short tags
+## Buyer personality — how they evaluate and decide
 
-2-3 tags on how this company evaluates and decides, not a sentence
-explaining the reasoning. Good: ["Relationship-driven", "Craft-first",
-"Founder-led decisions"]. Bad: "Likely values a direct relationship over a
-sales process; small team means fast decisions."
+1-3 tags from: Relationship-driven, Craft-first, Process-driven,
+Schedule-driven, Quality-first, Founder-led, Collaborative, Risk-averse.
 
 ## Human Angle — exactly one thing
 

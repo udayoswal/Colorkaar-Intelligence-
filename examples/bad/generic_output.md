@@ -10,9 +10,9 @@ Same input as `examples/good/founder_led_boutique.md` — Northlight Films.
 {
   "company": "Northlight Films",
   "studio_archetype": "creative studio",
-  "operating_model": ["A passionate, innovative team of visual storytellers who bring creativity to every project"],
-  "studio_personality": ["Award-winning", "Innovative"],
-  "creative_dna": ["Outdoor", "Apparel"],
+  "operating_model": "Founder-led boutique, small passionate team",
+  "studio_personality": ["Award-winning", "Innovative", "Craft-focused"],
+  "creative_dna": ["Apparel"],
   "visual_dna": ["Beautiful cinematography with stunning, high-quality visuals throughout"],
   "decision_maker": "The creative team",
   "buyer_personality": ["Values quality and creativity"],
@@ -29,15 +29,23 @@ Same input as `examples/good/founder_led_boutique.md` — Northlight Films.
 
 ## Every rule this violates
 
-- `creative_dna` is `["Outdoor", "Apparel"]` — that's market, not aesthetic.
-  It describes what their clients sell, not how the studio sees. It should
-  be something like `["Naturalistic", "Restrained"]`.
-- `operating_model` and `visual_dna` are full sentences with filler
-  ("passionate, innovative team," "beautiful cinematography... stunning,
-  high-quality") instead of 2-4 short tags. The compression rule exists
-  specifically to prevent this.
-- `studio_personality` is two banned adjectives ("Award-winning,"
-  "Innovative"), not a description of how you'd actually work with them.
+- `operating_model` restates `studio_archetype` ("Founder-led boutique")
+  instead of adding a new fact, and does it in a sentence with filler
+  ("small passionate team") instead of the one short fact the field is
+  supposed to hold.
+- `studio_personality` uses "Award-winning" and "Craft-focused" — neither
+  is in the closed vocabulary (`Independent, Boutique, Hands-on,
+  Relationship-driven, Structured, Collaborative, Scalable, Experimental,
+  Image-first`). The real API schema would reject this outright; this
+  example shows what it looks like when a prompt doesn't enforce the list.
+- `creative_dna` is `["Apparel"]` — not in the closed vocabulary either, and
+  even if it were, "Apparel" restates the client's product, not a creative
+  specialty. It should be something like `["Outdoor"]` per the good example
+  — Outdoor-as-creative-passion, not Apparel-as-client-industry.
+- `visual_dna` is a full sentence with filler ("beautiful... stunning,
+  high-quality") instead of 1-3 tags from the closed vocabulary. The
+  compression rule and the controlled vocabulary both exist specifically to
+  prevent this.
 - `human_angle` is a list of three banned adjectives, not one concrete
   observation. This is the single most important rule in the whole system
   and this example breaks it directly.
@@ -52,11 +60,12 @@ Same input as `examples/good/founder_led_boutique.md` — Northlight Films.
   misread the room for this company.
 - `confidence: "High"` is unjustified — nothing here is actually more
   certain than the good example, it's just written more confidently.
-  Confidence should track evidence, not enthusiasm — and a categorical
+  Confidence should track evidence, not enthusiasm — a categorical
   confidence value doesn't get a pass on this just because it isn't a raw
-  number anymore.
+  number.
 - `reasoning` doesn't explain anything — "clearly a top-tier creative
   studio" is not a reason, it's a restatement of the inflated priority.
 
 If an analyzer run ever produces something that reads like this, the fix is
-in `prompts/system.md`, not in hand-editing the row.
+in `prompts/system.md` or `schemas/intelligence.schema.json`, not in
+hand-editing the row.
