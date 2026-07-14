@@ -13,23 +13,27 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 
-# Ordered so more-specific keywords (e.g. "dp-led") are checked before
-# generic ones — keep this in sync with prompts/scorer.md.
+# Ordered so more-specific keywords are checked before generic ones - e.g.
+# "huge production" must be checked before the generic "production compan"
+# pattern, or every huge-production row would match the generic bucket
+# first. Keep in sync with prompts/scorer.md.
 ARCHETYPE_KEYWORDS = [
     (("dp-led", "dp led", "cinematographer-led", "director + dp", "director/dp"), "dp_led"),
     (("founder-led", "founder led", "boutique"), "founder_led_boutique"),
     (("agency",), "agency"),
-    (("huge production", "large production", "production company"), "huge_production"),
+    (("huge production", "large production"), "huge_production"),
+    (("production compan", "production house", "video production", "content production"), "production_company"),
 ]
 
-# archetype -> {confidence -> outreach_priority}. Mirrors the table in
-# prompts/scorer.md exactly; if you change one, change both.
+# archetype -> {evidence_strength -> outreach_priority}. Mirrors the table
+# in prompts/scorer.md exactly; if you change one, change both.
 PRIORITY_TABLE = {
-    "dp_led": {"High": "Immediate", "Medium": "High", "Low": "Medium"},
-    "founder_led_boutique": {"High": "Immediate", "Medium": "High", "Low": "Medium"},
-    "agency": {"High": "High", "Medium": "Medium", "Low": "Low"},
-    "huge_production": {"High": "Medium", "Medium": "Low", "Low": "Low"},
-    "unknown": {"High": "Low", "Medium": "Low", "Low": "Low"},
+    "dp_led": {"Strong": "Immediate", "Moderate": "High", "Weak": "Medium"},
+    "founder_led_boutique": {"Strong": "Immediate", "Moderate": "High", "Weak": "Medium"},
+    "agency": {"Strong": "High", "Moderate": "Medium", "Weak": "Low"},
+    "production_company": {"Strong": "Medium", "Moderate": "Medium", "Weak": "Low"},
+    "huge_production": {"Strong": "Medium", "Moderate": "Low", "Weak": "Low"},
+    "unknown": {"Strong": "Low", "Moderate": "Low", "Weak": "Low"},
 }
 
 
@@ -41,16 +45,16 @@ def archetype_bucket(studio_archetype: str) -> str:
     return "unknown"
 
 
-def priority_for(studio_archetype: str, confidence: str) -> str:
+def priority_for(studio_archetype: str, evidence_strength: str) -> str:
     bucket = archetype_bucket(studio_archetype)
-    confidence = confidence if confidence in ("High", "Medium", "Low") else "Low"
-    return PRIORITY_TABLE[bucket][confidence]
+    evidence_strength = evidence_strength if evidence_strength in ("Strong", "Moderate", "Weak") else "Weak"
+    return PRIORITY_TABLE[bucket][evidence_strength]
 
 
 def score_record(record: dict) -> dict:
     scored = dict(record)
     scored["llm_outreach_priority"] = record.get("outreach_priority")
-    scored["outreach_priority"] = priority_for(record.get("studio_archetype", ""), record.get("confidence", "Low"))
+    scored["outreach_priority"] = priority_for(record.get("studio_archetype", ""), record.get("evidence_strength", "Weak"))
     return scored
 
 

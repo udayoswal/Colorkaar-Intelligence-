@@ -21,11 +21,11 @@ TEMPLATE_FIELDS = [
     "studio_archetype",
     "operating_model",
     "decision_maker",
-    "human_angle",
+    "most_distinctive_insight",
     "colorkaar_angle",
     "conversation_starter",
     "outreach_priority",
-    "confidence",
+    "evidence_strength",
     "contact_name",
     "contact_title",
 ]

@@ -20,7 +20,7 @@ INTELLIGENCE_COLUMNS = [
     "email",
     "stage",
     "outreach_priority",
-    "confidence",
+    "evidence_strength",
     "studio_archetype",
     "operating_model",
     "studio_personality",
@@ -28,7 +28,7 @@ INTELLIGENCE_COLUMNS = [
     "visual_dna",
     "decision_maker",
     "buyer_personality",
-    "human_angle",
+    "most_distinctive_insight",
     "colorkaar_angle",
     "conversation_starter",
     "avoid",
@@ -43,9 +43,9 @@ EMAIL_COLUMNS = [
     "subject",
     "first_email_angle",
     "body",
-    "human_angle_used",
+    "most_distinctive_insight_used",
     "conversation_starter_used",
-    "confidence",
+    "evidence_strength",
 ]
 
 # llm_outreach_priority is intentionally excluded here (kept in the .jsonl

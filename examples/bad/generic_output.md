@@ -16,13 +16,13 @@ Same input as `examples/good/founder_led_boutique.md` — Northlight Films.
   "visual_dna": ["Beautiful cinematography with stunning, high-quality visuals throughout"],
   "decision_maker": "The creative team",
   "buyer_personality": ["Values quality and creativity"],
-  "human_angle": "Award-winning, passionate, visual storytellers",
+  "most_distinctive_insight": "Award-winning, passionate, visual storytellers",
   "colorkaar_angle": "Colorkaar can help elevate their already amazing work with our world-class grading services",
   "conversation_starter": "Loved your work on the outdoor apparel campaigns!",
   "avoid": [],
   "why_this_lead": ["They make great content"],
   "outreach_priority": "Immediate",
-  "confidence": "High",
+  "evidence_strength": "Strong",
   "reasoning": "This is clearly a top-tier creative studio."
 }
 ```
@@ -46,9 +46,9 @@ Same input as `examples/good/founder_led_boutique.md` — Northlight Films.
   high-quality") instead of 1-3 tags from the closed vocabulary. The
   compression rule and the controlled vocabulary both exist specifically to
   prevent this.
-- `human_angle` is a list of three banned adjectives, not one concrete
-  observation. This is the single most important rule in the whole system
-  and this example breaks it directly.
+- `most_distinctive_insight` is a list of three banned adjectives, not one
+  concrete observation. This is the single most important rule in the whole
+  system and this example breaks it directly.
 - `colorkaar_angle` is a full sentence with a compliment and "world-class" —
   the target is 3-8 words, e.g. "A long-term partner, not a vendor."
 - `conversation_starter` is "Loved your work" — the exact banned phrase
@@ -58,11 +58,10 @@ Same input as `examples/good/founder_led_boutique.md` — Northlight Films.
   other concrete fact. It reads like a rating, not a case.
 - `avoid` is empty with no attempt to actually think about what would
   misread the room for this company.
-- `confidence: "High"` is unjustified — nothing here is actually more
-  certain than the good example, it's just written more confidently.
-  Confidence should track evidence, not enthusiasm — a categorical
-  confidence value doesn't get a pass on this just because it isn't a raw
-  number.
+- `evidence_strength: "Strong"` is unjustified — nothing here is actually
+  more directly stated than in the good example, it's just written more
+  confidently. Evidence strength should track what's actually in the
+  evidence, not how enthusiastically the field is phrased.
 - `reasoning` doesn't explain anything — "clearly a top-tier creative
   studio" is not a reason, it's a restatement of the inflated priority.
 

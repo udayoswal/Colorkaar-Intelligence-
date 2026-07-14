@@ -20,9 +20,15 @@ understand creative businesses well enough that a producer could trust your
 read on them — and to write that understanding down as something scannable,
 like a CRM card, not a report.
 
-- You never invent facts. You reason from evidence given to you.
-- When evidence is weak, you lower confidence — you do not compensate with
-  more adjectives.
+- You never invent a *specific* fact — a named client, an award, a number,
+  a size claim — that isn't in the evidence. You do not shy away from a
+  *reasonable, clearly-labeled inference* from real signal, even thin
+  signal (a company name, a job title). Refusing to infer is not the same
+  virtue as refusing to hallucinate — see `prompts/system.md` → "Facts,
+  inference, and hallucination."
+- When evidence is weak, you say so via `evidence_strength` — you do not
+  leave the field blank. UNKNOWN is a last resort after the reasoning
+  ladder is exhausted, not a default.
 - You never compliment unless there is a genuine, specific reason.
 - You never mention awards, named clients, or campaigns unless doing so
   materially strengthens the relationship (rare — almost never).
@@ -58,7 +64,7 @@ by hand later, per lead or per batch, when you actually need a specific
 email — treat it as a consumer of the database, not a pipeline stage.
 
 Scoring is deliberately **not** left to the model, and it is deliberately
-**not a number**. `studio_archetype` × `confidence` → `outreach_priority`
+**not a number**. `studio_archetype` × `evidence_strength` → `outreach_priority`
 (Immediate / High / Medium / Low) is a fixed lookup table in `src/score.py`
 (mirrored in `prompts/scorer.md`). There is no `relationship_score` field —
 an earlier version had one (0-100) and it was cut on purpose: a number
@@ -73,8 +79,9 @@ means.
 ## The `reasoning` field
 
 Every analyzer and email record carries a `reasoning` field — a short
-sentence or two explaining *why* the model chose the human angle, the
-Colorkaar angle, or the tone it used. This field is for debugging only. It
+Fact → Inference → Insight trace explaining *why* the model chose the most
+distinctive insight, the Colorkaar angle, or the tone it used. This field
+is for debugging only. It
 is never shown to the recipient and it is dropped by `src/export.py` before
 the final CSVs are written. If you're unhappy with an output, `reasoning` is
 the first place to look.
@@ -87,10 +94,15 @@ Do not process the whole lead list on day one. The workflow is:
 2. Run it on the first 25 leads only (`--limit 25`, the default).
 3. Read every row. Out loud, if it helps. Ask: "Is this exactly how I'd
    describe this company?"
-4. When something is off — a generic Human Angle, a Buyer Personality field
-   that never gets used, a Conversation Starter that's too vague — fix the
-   prompt or the schema, not the individual output. Add a good/bad example to
-   `examples/` if it'll help future runs.
+4. When something is off — a generic Most Distinctive Insight, a wall of
+   UNKNOWNs on rows that actually had some signal, a Conversation Starter
+   that's too vague — fix the prompt or the schema, not the individual
+   output. Add a good/bad example to `examples/` if it'll help future runs.
+   The first real pass at this system erred toward too many UNKNOWNs by
+   treating "not explicitly stated" the same as "no evidence at all" — see
+   `prompts/system.md` → "The reasoning ladder" for the fix. If UNKNOWN
+   starts creeping back in on rows that have a company name, a job title,
+   or a one-line description to work with, that's the same bug recurring.
 5. Only once 25/25 feel right, increase `--limit` and keep going in batches.
 
 That loop — not the first draft of the prompt — is where the quality comes
@@ -132,17 +144,35 @@ Never mention: awards, festival selections, named clients, random campaigns,
 lead. If you catch the model doing this, it's a prompt bug — fix
 `prompts/system.md`, don't patch the output by hand.
 
-Human Angle is exactly one thing, not three. "Founder-led boutique" is good.
-"Award-winning, passionate, visual storytellers" is the failure mode this
-whole system exists to prevent.
+`most_distinctive_insight` (formerly "Human Angle") is exactly one thing,
+not three. "Founder-led boutique" is good. "Award-winning, passionate,
+visual storytellers" is the failure mode this whole system exists to
+prevent. But "distinctive" does not mean "rare" or "explicitly stated" —
+it means the strongest insight the reasoning ladder can reach. UNKNOWN for
+this field should be rare, not the default outcome for any row without a
+paragraph of description.
+
+UNKNOWN is a last resort, not a hedge. Two failure modes bracket this
+field, and both are real: inventing a specific fact with no evidence
+behind it, and refusing to infer anything from evidence that's merely
+thin rather than absent. The first version of this system over-corrected
+into the second failure mode — nine of the first 25 real rows came back
+UNKNOWN across the board, several of them for companies whose own name
+("1 Lab Productions," "72 Films") was sitting right there as evidence.
+`prompts/system.md` → "The reasoning ladder" is the fix; if UNKNOWN rates
+climb again, that's the regression to check for first.
 
 Never let a field turn back into a sentence. `avoid` and `why_this_lead` are
 short tag arrays, free text. `operating_model` is a single short fact — not
 an array, and never a restatement of `studio_archetype` (that redundancy
 was the whole field's first-draft flaw). `colorkaar_angle` and
 `first_email_angle` are phrases, not sentences with an em-dash explaining
-themselves. `confidence` and `outreach_priority` are categories
-(High/Medium/Low, Immediate/High/Medium/Low) — never a number, ever again.
+themselves. `evidence_strength` and `outreach_priority` are categories
+(Strong/Moderate/Weak, Immediate/High/Medium/Low) — never a number, ever
+again. `evidence_strength` (formerly "confidence") describes how much of
+a profile is fact vs. inference — it is explicitly not permission to leave
+fields blank; a Weak-evidence row should still have real values almost
+everywhere, just clearly inference-based ones.
 
 `studio_personality`, `creative_dna`, `visual_dna`, and `buyer_personality`
 are **closed vocabularies**, enforced as JSON Schema `enum`s in

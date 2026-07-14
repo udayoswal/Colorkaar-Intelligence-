@@ -17,25 +17,34 @@ was really an opinion, and a number invites treating "93" and "95" as
 meaningfully different when they aren't. `outreach_priority` is a category,
 not a score.
 
-## Outreach priority = f(studio archetype, confidence)
+## Outreach priority = f(studio archetype, evidence strength)
 
-| `studio_archetype` (matched loosely, case-insensitive) | High confidence | Medium confidence | Low confidence |
+| `studio_archetype` (matched loosely, case-insensitive) | Strong evidence | Moderate evidence | Weak evidence |
 |---|---|---|---|
 | DP-led (director/cinematographer partnership) | Immediate | High | Medium |
 | Founder-led boutique | Immediate | High | Medium |
 | Agency | High | Medium | Low |
+| Production company (generic, size/structure unconfirmed) | Medium | Medium | Low |
 | Huge production company | Medium | Low | Low |
 | Unknown / no archetype match | Low | Low | Low |
 
 `src/score.py` matches on keywords in `studio_archetype`, so the model can
-phrase it naturally ("founder-led boutique studio", "DP-led shop") and still
-hit the right row. Anything that doesn't match a known archetype falls back
-to the "Unknown" row rather than guessing.
+phrase it naturally ("founder-led boutique studio," "DP-led shop") and
+still hit the right row. The "production company" row exists specifically
+so a plain, evidence-backed "this is a production company, but I don't know
+if it's a boutique or a huge shop" doesn't collapse into "unknown" priority
+— it's real signal, just not enough to place it at the top or bottom of the
+table. Anything that doesn't match a known archetype falls back to the
+"Unknown" row rather than guessing.
 
 This is the mechanical version of "confidence matters more than coverage" —
 a studio that *looks* DP-led from a two-line description doesn't get
-Immediate priority just because the archetype match was lucky; low
-confidence pulls every archetype down by at least one tier.
+Immediate priority just because the archetype match was lucky; Weak
+evidence pulls every archetype down by at least one tier. Note this table
+is deliberately **less punishing on Weak evidence than the old version
+was** — `evidence_strength: Weak` no longer means the model was allowed to
+leave fields blank, so a Weak-evidence row is a real, if generic,
+characterization rather than an empty one, and its priority reflects that.
 
 ## Why this isn't the model's job
 

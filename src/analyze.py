@@ -118,7 +118,7 @@ def main() -> None:
             processed += 1
             print(
                 f"[{i}/{len(rows)}] {result['company']} -> {result['studio_archetype']} "
-                f"| llm priority {result['outreach_priority']} (confidence {result['confidence']})"
+                f"| llm priority {result['outreach_priority']} (evidence {result['evidence_strength']})"
             )
 
     print(f"\nDone. {processed}/{len(rows)} leads analyzed -> {output_path}")

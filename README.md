@@ -94,7 +94,7 @@ python src/export.py
   `--limit` (default 25), `--start` (resume partway through a file), `--model`.
 - **`src/score.py`** — no LLM call. Applies the deterministic rubric in
   `prompts/scorer.md` to compute `outreach_priority` (Immediate / High /
-  Medium / Low — no numeric score) from `studio_archetype` and `confidence`.
+  Medium / Low — no numeric score) from `studio_archetype` and `evidence_strength`.
   Reads `*.raw.jsonl`, writes `*.scored.jsonl`.
 - **`src/export.py`** — drops the debug `reasoning` field, writes
   `output/lead_intelligence.csv`, the deliverable. The pipeline ends here.
@@ -115,7 +115,7 @@ python src/export.py   # re-run to also produce output/emails.csv
 
 Every intermediate `.jsonl` record has a `reasoning` field — a sentence or
 two on why the model chose what it chose. It's dropped before the final
-CSVs. If a Human Angle or Colorkaar Angle looks wrong, read `reasoning`
+CSVs. If a Most Distinctive Insight or Colorkaar Angle looks wrong, read `reasoning`
 first; it usually tells you whether the input data was thin or the prompt
 needs adjusting.
 

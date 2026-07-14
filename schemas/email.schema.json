@@ -6,9 +6,9 @@
     "subject",
     "first_email_angle",
     "body",
-    "human_angle_used",
+    "most_distinctive_insight_used",
     "conversation_starter_used",
-    "confidence",
+    "evidence_strength",
     "reasoning"
   ],
   "properties": {
@@ -22,23 +22,23 @@
     },
     "first_email_angle": {
       "type": "string",
-      "description": "The short, punchy emotional bridge between the intelligence profile and this specific email - roughly 3-8 words. Usually a tactical, campaign-specific rendering of colorkaar_angle, but chosen fresh for this outreach and free to draw on human_angle or why_this_lead instead if that's the stronger hook this time. e.g. \"Protecting the look established in camera.\""
+      "description": "The short, punchy emotional bridge between the intelligence profile and this specific email - roughly 3-8 words. Usually a tactical rendering of colorkaar_angle, but chosen fresh for this outreach and free to draw on most_distinctive_insight or why_this_lead instead if that's the stronger hook this time. e.g. \"Protecting the look established in camera.\""
     },
     "body": {
       "type": "string",
       "description": "The email body. Human, minimal, confident, founder-led, professional, relationship-first. Never salesy."
     },
-    "human_angle_used": {
+    "most_distinctive_insight_used": {
       "type": "string",
-      "description": "The human_angle this email was actually built around."
+      "description": "The most_distinctive_insight this email was actually built around."
     },
     "conversation_starter_used": {
       "type": "string",
       "description": "The conversation_starter this email opens with."
     },
-    "confidence": {
+    "evidence_strength": {
       "type": "string",
-      "enum": ["High", "Medium", "Low"],
+      "enum": ["Strong", "Moderate", "Weak"],
       "description": "Carried forward from the intelligence profile, adjusted if the email required more inference."
     },
     "reasoning": {

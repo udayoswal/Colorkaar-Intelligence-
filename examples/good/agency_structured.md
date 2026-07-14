@@ -25,22 +25,25 @@ Projects: Retail and tech brand campaigns.
   "visual_dna": [],
   "decision_maker": "Head of Production (Priya)",
   "buyer_personality": ["Process-driven", "Schedule-driven"],
-  "human_angle": "UNKNOWN",
+  "most_distinctive_insight": "Full-service agency, no fixed house style",
   "colorkaar_angle": "Reliable finishing across a varied roster",
   "conversation_starter": "Finishing capacity for varied campaign work",
   "avoid": ["Single-look framing", "Founder-to-founder pitch"],
   "why_this_lead": ["Agency-scale volume", "Needs reliable capacity, not a signature look", "Process-driven buyer"],
   "outreach_priority": "Medium",
-  "confidence": "Medium",
-  "reasoning": "Operating model and decision-maker are directly stated. No visual signature is stated, so visual_dna is correctly left empty rather than invented, and human_angle is UNKNOWN rather than a forced compliment. creative_dna landed on Corporate as the closest closed-vocabulary fit for a generalist retail/tech client roster, not because either client industry is itself a creative specialty."
+  "evidence_strength": "Moderate",
+  "reasoning": "Fact: mid-size agency, in-house production and post, explicitly no consistent visual signature. Inference: a Head of Production as primary contact signals a process-driven buying pattern, not a founder relationship. Insight: their genuinely distinctive trait is the deliberate absence of a house style, which is worth naming rather than leaving as an empty field."
 }
 ```
 
-This is good because it shows the honest alternative to the founder-led
-example: `studio_personality` is "Structured, Collaborative, Scalable"
-instead of "Independent, Hands-on" — the field is doing real work
-distinguishing how you'd approach this lead differently. `visual_dna` is an
-empty array, not filler, because the evidence explicitly says there's no
-consistent signature. `human_angle` is UNKNOWN rather than invented. This
-lead is still worth contacting (`outreach_priority: Medium`) — it's just a
-different kind of relationship than a boutique.
+This shows two things at once. First, the honest contrast with the
+founder-led example: `studio_personality` is "Structured, Collaborative,
+Scalable" instead of "Independent, Hands-on" — real work distinguishing how
+you'd approach this lead differently. Second, and more important given
+where the first version of this system went wrong: `visual_dna` is
+correctly an empty array (the evidence explicitly says there's no
+consistent signature — a genuine dead end for that specific closed
+vocabulary), but `most_distinctive_insight` is NOT left at UNKNOWN just
+because there's no founder story here. "No fixed house style" is itself a
+real, distinctive, evidence-backed trait — the reasoning ladder found
+something meaningful even though nothing unique jumped out.
