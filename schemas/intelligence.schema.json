@@ -1,0 +1,87 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "company",
+    "studio_archetype",
+    "operating_model",
+    "creative_dna",
+    "visual_dna",
+    "decision_maker",
+    "buyer_personality",
+    "human_angle",
+    "colorkaar_angle",
+    "conversation_starter",
+    "avoid",
+    "priority",
+    "relationship_score",
+    "confidence",
+    "reasoning"
+  ],
+  "properties": {
+    "company": {
+      "type": "string",
+      "description": "The company name as given in the input."
+    },
+    "studio_archetype": {
+      "type": "string",
+      "description": "One of: founder-led boutique, DP-led, agency, huge production company, unknown. Phrase naturally but keep one of these families identifiable."
+    },
+    "operating_model": {
+      "type": "string",
+      "description": "How this company actually works day to day, based on evidence. UNKNOWN if unsupported."
+    },
+    "creative_dna": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Short, specific, evidence-based observations about their creative identity. Empty array if none supported."
+    },
+    "visual_dna": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Short, specific, evidence-based observations about their visual style. Empty array if none supported."
+    },
+    "decision_maker": {
+      "type": "string",
+      "description": "Who makes creative decisions here, inferred from contact title and evidence. UNKNOWN if unsupported."
+    },
+    "buyer_personality": {
+      "type": "string",
+      "description": "How this company is likely to evaluate and buy a service like Colorkaar's. UNKNOWN if unsupported."
+    },
+    "human_angle": {
+      "type": "string",
+      "description": "Exactly ONE concrete, specific human observation. Never a generic compliment. UNKNOWN if unsupported."
+    },
+    "colorkaar_angle": {
+      "type": "string",
+      "description": "One sentence: why Colorkaar specifically matters to this company. Not an email."
+    },
+    "conversation_starter": {
+      "type": "string",
+      "description": "A specific topic to open a conversation with, not a compliment."
+    },
+    "avoid": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Topics, comparisons, or tones that would misread the room with this specific lead."
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["A+", "A", "B", "C", "D"],
+      "description": "Your proposed priority tier. Recomputed deterministically downstream — reason honestly."
+    },
+    "relationship_score": {
+      "type": "integer",
+      "description": "Your proposed 0-100 relationship score. Recomputed deterministically downstream — reason honestly."
+    },
+    "confidence": {
+      "type": "integer",
+      "description": "0-100. How much of this analysis is grounded in real evidence vs. inference."
+    },
+    "reasoning": {
+      "type": "string",
+      "description": "One or two sentences on why you chose the human angle and Colorkaar angle, and why this confidence level. Debug only, dropped before export."
+    }
+  }
+}

@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+
+# Generated pipeline output — real lead intelligence and emails should not
+# be committed to git. Keep the directory structure only.
+output/*.jsonl
+output/*.csv
+!output/.gitkeep

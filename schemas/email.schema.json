@@ -1,0 +1,48 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "company",
+    "subject",
+    "body",
+    "human_angle_used",
+    "colorkaar_angle_used",
+    "conversation_starter_used",
+    "confidence",
+    "reasoning"
+  ],
+  "properties": {
+    "company": {
+      "type": "string",
+      "description": "The company name, copied from the intelligence profile."
+    },
+    "subject": {
+      "type": "string",
+      "description": "Short, specific, not salesy. No exclamation points."
+    },
+    "body": {
+      "type": "string",
+      "description": "The email body. Human, minimal, confident, founder-led, professional, relationship-first. Never salesy."
+    },
+    "human_angle_used": {
+      "type": "string",
+      "description": "The human_angle this email was actually built around."
+    },
+    "colorkaar_angle_used": {
+      "type": "string",
+      "description": "The colorkaar_angle this email was actually built around."
+    },
+    "conversation_starter_used": {
+      "type": "string",
+      "description": "The conversation_starter this email opens with."
+    },
+    "confidence": {
+      "type": "integer",
+      "description": "0-100. Carried forward from the intelligence profile, adjusted if the email required more inference."
+    },
+    "reasoning": {
+      "type": "string",
+      "description": "One or two sentences on which parts of the intelligence profile the email was built around, and why. Debug only, dropped before export."
+    }
+  }
+}
