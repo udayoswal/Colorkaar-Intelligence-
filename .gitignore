@@ -3,6 +3,12 @@ __pycache__/
 *.pyc
 .env
 
+# Real lead data — never commit real names/emails/companies. Only the
+# tracked template (input/enriched_leads.example.csv) and the synthetic
+# examples/sample_leads.csv are safe to commit.
+input/enriched_leads.csv
+input/*.raw.csv
+
 # Generated pipeline output — real lead intelligence and emails should not
 # be committed to git. Keep the directory structure only.
 output/*.jsonl

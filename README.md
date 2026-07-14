@@ -3,8 +3,10 @@
 The best lead intelligence engine for a boutique creative studio. Not an
 email enrichment tool, and not a prompt — a small pipeline that builds a
 database of who your leads actually are: understand the company, score it
-deterministically, write one email, export. The database is the asset; the
-emails are just the first thing built on top of it.
+deterministically, export. That's the whole core workflow. The database is
+the asset; email generation is a separate, optional tool you run by hand
+later when you actually need to write to someone (see "Optional" below) —
+it is not part of the default run.
 
 Read `CLAUDE.md` first — it explains the philosophy and the iteration
 discipline this repo is built around. This file is just setup and commands.
@@ -29,7 +31,7 @@ missing ones are treated as unknown):
 
 | Column | Meaning |
 |---|---|
-| `lead_id` | Any stable identifier — used to join intelligence to emails later |
+| `lead_id` | Any stable identifier — used to join related rows later |
 | `company` | Company name |
 | `description` | Whatever blurb you have on them |
 | `website_summary` | A summary of their website / portfolio |
@@ -40,28 +42,28 @@ missing ones are treated as unknown):
 | `website_url` | For your own reference |
 
 A synthetic (fake) example file is at `examples/sample_leads.csv` — use it to
-smoke-test the pipeline before pointing it at real data.
+smoke-test the pipeline before pointing it at real data. `input/enriched_leads.example.csv`
+documents the header only. Your real file goes at `input/enriched_leads.csv`
+— that exact path is gitignored, so it can never end up in a commit.
 
 ## Run it — on 25 leads first
 
 ```bash
 python src/analyze.py --input examples/sample_leads.csv --limit 25
 python src/score.py
-python src/generate_email.py
 python src/export.py
 ```
 
-Then open `output/lead_intelligence.csv` and `output/emails.csv` and read
-every row. See `CLAUDE.md` → "The iteration discipline" — this is the step
-that actually determines quality. Don't skip it, and don't run the full
-1,469-lead list until these 25 feel right.
+Then open `output/lead_intelligence.csv` and read every row. See
+`CLAUDE.md` → "The iteration discipline" — this is the step that actually
+determines quality. Don't skip it, and don't run the full 1,469-lead list
+until these 25 feel right.
 
 Once you're happy:
 
 ```bash
 python src/analyze.py --input input/enriched_leads.csv --limit 1469
 python src/score.py
-python src/generate_email.py --priority Immediate High Medium
 python src/export.py
 ```
 
@@ -74,11 +76,20 @@ python src/export.py
   `prompts/scorer.md` to compute `outreach_priority` (Immediate / High /
   Medium / Low — no numeric score) from `studio_archetype` and `confidence`.
   Reads `*.raw.jsonl`, writes `*.scored.jsonl`.
-- **`src/generate_email.py`** — one Claude call per lead, only for leads that
-  already have intelligence. Flags: `--priority Immediate High` to only
-  email your best leads, `--limit`.
-- **`src/export.py`** — joins everything, drops the debug `reasoning` field,
-  writes the two CSVs BD actually reads.
+- **`src/export.py`** — drops the debug `reasoning` field, writes
+  `output/lead_intelligence.csv`, the deliverable. The pipeline ends here.
+
+## Optional: generating an email
+
+`src/generate_email.py` still exists and still works, but it's not part of
+the core workflow above — the database isn't organized around producing
+emails. Run it by hand, per lead or per batch, only when you're actually
+about to write to someone:
+
+```bash
+python src/generate_email.py --priority Immediate High
+python src/export.py   # re-run to also produce output/emails.csv
+```
 
 ## Debugging a bad output
 

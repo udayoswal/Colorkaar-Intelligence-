@@ -3,8 +3,10 @@
 This is not an email enrichment tool. It's a database of who Colorkaar's
 leads actually are — the kind of asset that keeps compounding in value
 across outreach, networking, proposals, and client development, long after
-any one email template has been rewritten. Emails are just the first thing
-built on top of it.
+any one email template has been rewritten. The core pipeline builds and
+scores that database and stops there; it does not generate emails. Optimize
+for one question: could a new employee at Colorkaar open a row and
+immediately understand how to approach this company?
 
 This file is how Claude (and any engineer) should think about this
 repository. It is not how Claude should write — that's `prompts/email.md`.
@@ -40,14 +42,20 @@ protect that sentence from drifting into generic AI-written outreach.
 ## This is a product, not a prompt
 
 The engine is split into discrete, inspectable, independently-improvable
-stages. Each stage has one job:
+stages. The core pipeline is three stages — understand, score, export — and
+that's the whole deliverable:
 
 | Stage | Script | Input | Output | Job |
 |---|---|---|---|---|
 | Analyze | `src/analyze.py` | `input/enriched_leads.csv` | `output/lead_intelligence.raw.jsonl` | Understand the company. LLM call, structured JSON output. |
 | Score | `src/score.py` | `*.raw.jsonl` | `*.scored.jsonl` | Apply the outreach-priority rubric **deterministically**, in code — not vibes, not a second LLM call. |
-| Generate email | `src/generate_email.py` | `*.scored.jsonl` | `output/emails.raw.jsonl` | Only after intelligence exists. LLM call, structured JSON output. |
-| Export | `src/export.py` | both `*.jsonl` | `output/lead_intelligence.csv`, `output/emails.csv` | Join, drop the `reasoning` debug field, produce the deliverable CSVs. |
+| Export | `src/export.py` | `*.scored.jsonl` | `output/lead_intelligence.csv` | Drop the `reasoning` debug field, produce the deliverable CSV. |
+
+`src/generate_email.py` still exists and still works, but it is **not part
+of the core workflow** — the database is not organized around producing
+emails, and the default run (see README) stops after `export.py`. Run it
+by hand later, per lead or per batch, when you actually need a specific
+email — treat it as a consumer of the database, not a pipeline stage.
 
 Scoring is deliberately **not** left to the model, and it is deliberately
 **not a number**. `studio_archetype` × `confidence` → `outreach_priority`
@@ -97,14 +105,14 @@ prompts/
   system.md                — the durable system prompt for the analyzer (cached, stable)
   analyzer.md               — per-lead user-message template for the analyzer
   scorer.md                  — the outreach-priority rubric (mirrors src/score.py)
-  email.md                   — system prompt + user template for email generation
+  email.md                   — [optional, not core] system prompt + user template for email generation
 schemas/
   intelligence.schema.json   — structured-output schema for the analyzer
-  email.schema.json          — structured-output schema for email generation
+  email.schema.json          — [optional, not core] structured-output schema for email generation
 examples/
   good/                       — few-shot examples of intelligence the bar is set to
   bad/                        — few-shot counter-examples, with the violated rule named
-  emails/                     — a reference email
+  emails/                     — [optional, not core] a reference email
 input/
   enriched_leads.csv          — your real lead list goes here (not committed with real data)
 output/                       — generated; gitignored except for structure
@@ -113,8 +121,8 @@ src/
   prompts.py                  — loads prompts/*.md, splits SYSTEM / USER_TEMPLATE sections
   analyze.py                  — stage 1
   score.py                    — stage 2 (deterministic)
-  generate_email.py           — stage 3
-  export.py                   — stage 4
+  export.py                   — stage 3 (the pipeline ends here)
+  generate_email.py           — [optional, not core] run by hand per lead/batch when you need an email
 ```
 
 ## Rules that must never regress

@@ -82,13 +82,16 @@ def main() -> None:
     args = parser.parse_args()
 
     intelligence = load_jsonl(Path(args.intelligence))
-    emails = load_jsonl(Path(args.emails))
-
     write_csv(Path(args.intelligence_out), INTELLIGENCE_COLUMNS, intelligence)
     print(f"{len(intelligence)} rows -> {args.intelligence_out}")
 
-    write_csv(Path(args.emails_out), EMAIL_COLUMNS, emails)
-    print(f"{len(emails)} rows -> {args.emails_out}")
+    # Emails are optional and not part of the core pipeline (see CLAUDE.md) -
+    # only export them if src/generate_email.py was actually run.
+    emails_path = Path(args.emails)
+    if emails_path.exists():
+        emails = load_jsonl(emails_path)
+        write_csv(Path(args.emails_out), EMAIL_COLUMNS, emails)
+        print(f"{len(emails)} rows -> {args.emails_out}")
 
 
 if __name__ == "__main__":
