@@ -30,9 +30,17 @@ Same input as `examples/good/founder_led_boutique.md` — Northlight Films.
 ## Every rule this violates
 
 - `operating_model` restates `studio_archetype` ("Founder-led boutique")
-  instead of adding a new fact, and does it in a sentence with filler
-  ("small passionate team") instead of the one short fact the field is
-  supposed to hold.
+  instead of naming a distinct structural fact, and phrases it as a
+  sentence with filler ("small passionate team") instead of picking one
+  value from the closed vocabulary (Owner-operated, Creative partnership,
+  Director-led collective, Agency-owned production arm, In-house production
+  team, Independent production company, Multi-founder studio). Like
+  `studio_personality`, the real schema would reject this outright now that
+  `operating_model` is enum-constrained.
+- `decision_maker` is "The creative team" — vague and not a role at all.
+  It should be something specific like "Founder/Director," and should never
+  contain the contact's actual name either way (the lead database already
+  has it).
 - `studio_personality` uses "Award-winning" and "Craft-focused" — neither
   is in the closed vocabulary (`Independent, Boutique, Hands-on,
   Relationship-driven, Structured, Collaborative, Scalable, Experimental,

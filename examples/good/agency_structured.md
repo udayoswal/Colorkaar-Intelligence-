@@ -19,16 +19,16 @@ Projects: Retail and tech brand campaigns.
 {
   "company": "Bright Field Collective",
   "studio_archetype": "agency",
-  "operating_model": "In-house production and post",
+  "operating_model": "In-house production team",
   "studio_personality": ["Structured", "Collaborative", "Scalable"],
   "creative_dna": ["Corporate"],
   "visual_dna": [],
-  "decision_maker": "Head of Production (Priya)",
+  "decision_maker": "Head of Production",
   "buyer_personality": ["Process-driven", "Schedule-driven"],
   "most_distinctive_insight": "Full-service agency, no fixed house style",
   "colorkaar_angle": "Reliable finishing across a varied roster",
-  "conversation_starter": "Finishing capacity for varied campaign work",
-  "avoid": ["Single-look framing", "Founder-to-founder pitch"],
+  "conversation_starter": "How do you keep finishing consistent when the visual style changes brief to brief?",
+  "avoid": ["Don't pitch a single signature look", "Don't lead with a founder-to-founder pitch"],
   "why_this_lead": ["Agency-scale volume", "Needs reliable capacity, not a signature look", "Process-driven buyer"],
   "outreach_priority": "Medium",
   "evidence_strength": "Moderate",
@@ -36,14 +36,20 @@ Projects: Retail and tech brand campaigns.
 }
 ```
 
+(Computed afterward: `outreach_objective` for an agency archetype is
+"Become a finishing partner.")
+
 This shows two things at once. First, the honest contrast with the
-founder-led example: `studio_personality` is "Structured, Collaborative,
-Scalable" instead of "Independent, Hands-on" — real work distinguishing how
-you'd approach this lead differently. Second, and more important given
-where the first version of this system went wrong: `visual_dna` is
-correctly an empty array (the evidence explicitly says there's no
-consistent signature — a genuine dead end for that specific closed
-vocabulary), but `most_distinctive_insight` is NOT left at UNKNOWN just
-because there's no founder story here. "No fixed house style" is itself a
-real, distinctive, evidence-backed trait — the reasoning ladder found
-something meaningful even though nothing unique jumped out.
+founder-led example: `operating_model` is "In-house production team," not
+"Owner-operated" — a genuinely different structural fact, from the same
+closed vocabulary. `decision_maker` is "Head of Production," not a name.
+`studio_personality` is "Structured, Collaborative, Scalable" instead of
+"Independent, Hands-on" — real work distinguishing how you'd approach this
+lead differently. Second, and more important given where the first version
+of this system went wrong: `visual_dna` is correctly an empty array (the
+evidence explicitly says there's no consistent signature — a genuine dead
+end for that specific closed vocabulary), but `most_distinctive_insight` is
+NOT left at UNKNOWN just because there's no founder story here. "No fixed
+house style" is itself a real, distinctive, evidence-backed trait — the
+reasoning ladder found something meaningful even though nothing unique
+jumped out.

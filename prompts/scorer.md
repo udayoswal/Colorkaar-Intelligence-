@@ -46,6 +46,30 @@ was** — `evidence_strength: Weak` no longer means the model was allowed to
 leave fields blank, so a Weak-evidence row is a real, if generic,
 characterization rather than an empty one, and its priority reflects that.
 
+## Outreach objective = f(studio archetype)
+
+A second field, `outreach_objective`, is computed the same way -
+deterministically, in `src/score.py` - but purely from `studio_archetype`,
+with no evidence-strength dimension. It exists so the email has a stated
+purpose beyond "get a reply": what is this specific touchpoint actually
+trying to accomplish?
+
+| `studio_archetype` bucket | `outreach_objective` |
+|---|---|
+| DP-led | Start a creative conversation |
+| Founder-led boutique | Build the relationship |
+| Agency | Become a finishing partner |
+| Production company (generic) | Open a vendor conversation |
+| Huge production company | Enter the vendor list |
+| Unknown | Research further before outreach |
+
+Unlike `outreach_priority`, the model does not propose this one and there
+is no `llm_outreach_objective` audit field - the mapping from archetype to
+objective is a clean enough function that a second opinion doesn't add
+anything. If that stops being true (e.g. a `creative_dna` of "Narrative"
+should shift the objective independent of archetype), extend the table
+here rather than asking the model to freehand it.
+
 ## Why this isn't the model's job
 
 The model's own `outreach_priority` proposal is kept on the record as

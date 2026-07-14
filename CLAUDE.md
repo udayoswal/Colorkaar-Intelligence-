@@ -36,7 +36,11 @@ like a CRM card, not a report.
 - Think like a producer. Write like a filmmaker.
 - **The shorter a field is, the more useful it is.** If a field reads like
   a sentence explaining itself, it's wrong. See `prompts/system.md` →
-  "The compression rule."
+  "The compression rule." (`conversation_starter` and `avoid` are the
+  deliberate exceptions — see below.)
+- **Every field should help someone write a better email.** If it doesn't
+  directly change the outreach, it doesn't belong in the schema. If two
+  fields would produce the same email, one of them is dead weight.
 
 The single most important sentence in this whole repo:
 
@@ -162,17 +166,40 @@ UNKNOWN across the board, several of them for companies whose own name
 `prompts/system.md` → "The reasoning ladder" is the fix; if UNKNOWN rates
 climb again, that's the regression to check for first.
 
-Never let a field turn back into a sentence. `avoid` and `why_this_lead` are
-short tag arrays, free text. `operating_model` is a single short fact — not
-an array, and never a restatement of `studio_archetype` (that redundancy
-was the whole field's first-draft flaw). `colorkaar_angle` and
-`first_email_angle` are phrases, not sentences with an em-dash explaining
-themselves. `evidence_strength` and `outreach_priority` are categories
-(Strong/Moderate/Weak, Immediate/High/Medium/Low) — never a number, ever
-again. `evidence_strength` (formerly "confidence") describes how much of
-a profile is fact vs. inference — it is explicitly not permission to leave
-fields blank; a Weak-evidence row should still have real values almost
-everywhere, just clearly inference-based ones.
+Never let a field turn back into a sentence. `why_this_lead` is a short tag
+array, free text. `operating_model` is a **closed vocabulary** of
+organizational structure types (Owner-operated, Creative partnership,
+Director-led collective, Agency-owned production arm, In-house production
+team, Independent production company, Multi-founder studio) — never a
+restatement of `studio_archetype`, and never a client-relationship fact
+("works with multiple clients" tells you nothing; every production company
+does that). `decision_maker` is role only, never the contact's name — the
+lead database already has the name, and only the role changes the
+outreach. `colorkaar_angle` and `first_email_angle` are phrases, not
+sentences with an em-dash explaining themselves. `evidence_strength` and
+`outreach_priority` are categories (Strong/Moderate/Weak,
+Immediate/High/Medium/Low) — never a number, ever again. `evidence_strength`
+(formerly "confidence") describes how much of a profile is fact vs.
+inference — it is explicitly not permission to leave fields blank; a
+Weak-evidence row should still have real values almost everywhere, just
+clearly inference-based ones.
+
+Two fields are the deliberate exceptions to "shorter is better."
+`conversation_starter` is a real question a producer would ask and expect a
+reply to, not a topic label — "How do you approach maintaining a
+consistent look across branded campaigns?" not "Grading for branded
+campaigns." `avoid` is a list of actionable directives ("Don't lead with
+pricing"), not bare tags ("Pricing") — a writer should be able to check a
+draft against each line directly.
+
+`outreach_objective` (new) states what a specific email is trying to
+accomplish — Build the relationship, Start a creative conversation, Become
+a finishing partner, Enter the vendor list, Open a vendor conversation,
+Research further before outreach. Unlike every other derived field, it's
+**purely deterministic** — a lookup from `studio_archetype` in
+`src/score.py`, no LLM proposal, no disagreement tracking. The mapping is
+clean enough that a second opinion doesn't add anything; see
+`prompts/scorer.md`.
 
 `studio_personality`, `creative_dna`, `visual_dna`, and `buyer_personality`
 are **closed vocabularies**, enforced as JSON Schema `enum`s in

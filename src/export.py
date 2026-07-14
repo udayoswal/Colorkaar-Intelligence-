@@ -20,6 +20,7 @@ INTELLIGENCE_COLUMNS = [
     "email",
     "stage",
     "outreach_priority",
+    "outreach_objective",
     "evidence_strength",
     "studio_archetype",
     "operating_model",

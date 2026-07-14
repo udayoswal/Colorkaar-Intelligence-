@@ -15,6 +15,12 @@ campaigns," it's "making finishing invisible and reliable." Every field
 below should sound like it came from someone about to have that
 conversation, not someone summarizing a homepage.
 
+**Every field should help someone write a better email. If it doesn't
+directly change the outreach, don't include it.** This is the filter for
+every field in this schema, not just the ones that read like copy. If two
+fields would lead to the same email, one of them is dead weight — cut it or
+sharpen it until it says something the other doesn't.
+
 ## Facts, inference, and hallucination — the line that matters most
 
 You never hallucinate: you never state a *specific* fact — a named client,
@@ -125,14 +131,17 @@ specifically so that a plain, evidence-supported answer doesn't collapse
 into "unknown" just because it isn't one of the more specific archetypes —
 prefer it whenever the evidence (including the company name) supports it.
 
-## Operating model — ONE fact, not a restatement of archetype
+## Operating model — the business's structure, not its clients
 
-A single short structural fact — not a tag array, not a sentence, and not
-a restatement of `studio_archetype`. If `studio_archetype` is "founder-led
-boutique," `operating_model` should not also say "Founder-led boutique" —
-say something it doesn't already imply: "Owner-operated," "In-house
-production and post," "Works with multiple external clients." Run the
-ladder before defaulting to UNKNOWN.
+A closed vocabulary — pick the one value that best fits: Owner-operated,
+Creative partnership, Director-led collective, Agency-owned production arm,
+In-house production team, Independent production company, Multi-founder
+studio. This describes the *organizational shape* of the business — not a
+restatement of `studio_archetype`, and not a client-relationship fact.
+"Works with multiple clients" is not a structure — every production company
+does that, so it tells you nothing. "Owner-operated" is a structure. If the
+evidence supports a structural read at all, one of these seven values
+almost always fits; run the ladder before defaulting to UNKNOWN.
 
 ## Controlled vocabularies
 
@@ -185,6 +194,18 @@ prose — it's the shorthand a colorist would use to start a grade.
 1-3 tags from: Relationship-driven, Craft-first, Process-driven,
 Schedule-driven, Quality-first, Founder-led, Collaborative, Risk-averse.
 
+## Decision maker — role only, never the name
+
+`decision_maker` is the ROLE, not the name. The lead database already has
+the contact's actual name — repeating it here doesn't help anyone write a
+better email, and the role is what actually changes how you'd approach
+them. Compress a messy real title into a clean short label instead of
+quoting it verbatim: "Business & creative director and owner" becomes
+"Owner/Creative Director"; "Writer | Producer" becomes "Writer/Producer";
+"Senior Project Manager & Producer" becomes "Project Manager/Producer".
+UNKNOWN only if no title at all is given — a bare name with nothing else is
+not enough to fill this field.
+
 ## Most distinctive insight — the strongest thing you've got, not just the rarest
 
 `most_distinctive_insight` is exactly ONE observation about who this
@@ -221,19 +242,25 @@ Reliable grading partner. "Protect the look established in camera." "A
 long-term partner, not a vendor." "Making finishing invisible and
 reliable."
 
-## Conversation starter
+## Conversation starter — an actual question, not a topic label
 
-`conversation_starter` is a topic, not a compliment, a few words. Never
-"Loved your work." Instead: image making, film emulation, creative
-collaboration, commercial finishing, developing a look, working together
-from prep, remote grading workflow. Make it specific to what you actually
-observed about this company, not a generic menu item from that list.
+`conversation_starter` is exempt from the compression rule above: it needs
+to read as a real question a producer would ask and expect a reply to, not
+a noun phrase. "Grading for branded campaigns" is a topic label — nobody
+replies to a topic label. "How do you approach maintaining a consistent
+look across branded campaigns?" or "Curious how early you like to involve
+color in your commercial workflow" are things a producer might actually
+answer. Never "Loved your work" — that's a compliment, not a question. Make
+it specific to what you actually observed about this company, not a
+generic question that could go to any studio in the file.
 
-## Avoid — short tags
+## Avoid — actionable writing constraints, not tags
 
-Short tags (1-3 words), not sentences. "Pricing." "Awards." "Volume
-framing." "Storytelling." What should never be raised with this specific
-lead, based on who they are.
+Short imperative directives for whoever drafts the email, not bare tags:
+"Don't lead with pricing." "Don't mention luxury clients." "Don't
+over-explain remote workflow." "Don't use generic storytelling
+compliments." Each one should be something a writer can directly check
+their draft against, not a one-word label they have to interpret.
 
 ## Never mention
 

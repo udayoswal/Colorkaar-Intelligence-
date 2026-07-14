@@ -25,6 +25,7 @@ TEMPLATE_FIELDS = [
     "colorkaar_angle",
     "conversation_starter",
     "outreach_priority",
+    "outreach_objective",
     "evidence_strength",
     "contact_name",
     "contact_title",

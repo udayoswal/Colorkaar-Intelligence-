@@ -36,6 +36,18 @@ PRIORITY_TABLE = {
     "unknown": {"Strong": "Low", "Moderate": "Low", "Weak": "Low"},
 }
 
+# archetype -> outreach_objective. Purely a function of archetype - no
+# evidence_strength dimension, no model proposal/disagreement tracking,
+# because the mapping is clean enough that a second opinion adds nothing.
+OBJECTIVE_TABLE = {
+    "dp_led": "Start a creative conversation",
+    "founder_led_boutique": "Build the relationship",
+    "agency": "Become a finishing partner",
+    "production_company": "Open a vendor conversation",
+    "huge_production": "Enter the vendor list",
+    "unknown": "Research further before outreach",
+}
+
 
 def archetype_bucket(studio_archetype: str) -> str:
     archetype = (studio_archetype or "").lower()
@@ -51,10 +63,15 @@ def priority_for(studio_archetype: str, evidence_strength: str) -> str:
     return PRIORITY_TABLE[bucket][evidence_strength]
 
 
+def objective_for(studio_archetype: str) -> str:
+    return OBJECTIVE_TABLE[archetype_bucket(studio_archetype)]
+
+
 def score_record(record: dict) -> dict:
     scored = dict(record)
     scored["llm_outreach_priority"] = record.get("outreach_priority")
     scored["outreach_priority"] = priority_for(record.get("studio_archetype", ""), record.get("evidence_strength", "Weak"))
+    scored["outreach_objective"] = objective_for(record.get("studio_archetype", ""))
     return scored
 
 

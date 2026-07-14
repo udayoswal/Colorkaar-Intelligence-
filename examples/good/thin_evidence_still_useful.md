@@ -37,9 +37,13 @@ description, no title, no visual notes, no size, no location.
   "why_this_lead": ["Company name signals video/production work", "No other evidence yet - needs research before outreach"],
   "outreach_priority": "Low",
   "evidence_strength": "Weak",
-  "reasoning": "Fact: the only evidence is the company name, 'Lakeview Reel Co,' and a contact name with no title. Inference: 'Reel Co' is a real, if faint, typological signal - a company doesn't call itself that unless it's in video/production. There's no signal at all for size, structure, or decision-maker, so those stay UNKNOWN rather than guessed. Insight: still a production company, just an unconfirmed and probably small one - stated plainly rather than left blank."
+  "reasoning": "Fact: the only evidence is the company name, 'Lakeview Reel Co,' and a contact name with no title. Inference: 'Reel Co' is a real, if faint, typological signal - a company doesn't call itself that unless it's in video/production. There's no signal at all for structure or decision-maker role, so those stay UNKNOWN rather than guessed. Insight: still a production company, just an unconfirmed and probably small one - stated plainly rather than left blank."
 }
 ```
+
+(Computed afterward: `outreach_objective` for "production company" is "Open
+a vendor conversation," and `outreach_priority` recomputes to "Low" given
+Weak evidence.)
 
 This is the difference the ladder makes. `studio_archetype`,
 `most_distinctive_insight`, and `why_this_lead` all have real content
@@ -48,8 +52,9 @@ real signal — step 2 of the ladder (a meaningful inference from what *is*
 there). But `operating_model`, `decision_maker`, `studio_personality`, and
 `buyer_personality` are correctly UNKNOWN/empty, because there is
 genuinely nothing — not even a job title — to run the ladder on for those.
+`conversation_starter` and `colorkaar_angle` also correctly stay UNKNOWN:
+there's nothing specific enough here for a real question or a real angle,
+and a generic one would be filler, not insight — different from the
+classification fields, which have a legitimate generic-but-true fallback.
 `evidence_strength: "Weak"` carries the honesty; it is not achieved by
-leaving fields blank. `outreach_priority: "Low"` is an honest proposal
-given how little is confirmed — this is a "needs research before
-outreach" row, not a "ready to email" row, and `why_this_lead` says so
-directly instead of implying it through silence.
+leaving fields blank.

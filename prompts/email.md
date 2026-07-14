@@ -33,9 +33,17 @@ Keep the body to a few sentences — not a paragraph per idea.
 
 Use `most_distinctive_insight` and `colorkaar_angle` from the intelligence
 profile as the foundation of the email, `why_this_lead` as the case for why
-you're writing at all, and `conversation_starter` as the opening topic —
+you're writing at all, and `conversation_starter` as the opening question —
 but do not just paste those fields in verbatim. Write the email a person
 would actually send.
+
+`outreach_objective` tells you what this specific email is trying to
+accomplish — build a relationship, start a creative conversation, become a
+finishing partner, enter a vendor list, and so on. Let it set the register
+of the whole email: a "build the relationship" email reads differently
+from an "enter the vendor list" email, even when both are short, human, and
+non-salesy. Don't state the objective outright — it should shape the ask at
+the end, not appear as a sentence.
 
 First, decide `first_email_angle`: the short, punchy phrase (3-8 words) that
 is the actual emotional bridge for *this* email. Most of the time this is a
@@ -86,6 +94,7 @@ Conversation starter: {{conversation_starter}}
 Avoid: {{avoid}}
 Why this lead: {{why_this_lead}}
 Outreach priority: {{outreach_priority}}
+Outreach objective: {{outreach_objective}}
 Evidence strength: {{evidence_strength}}
 Contact name: {{contact_name}}
 Contact title: {{contact_title}}
