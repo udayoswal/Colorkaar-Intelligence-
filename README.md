@@ -34,12 +34,32 @@ missing ones are treated as unknown):
 | `lead_id` | Any stable identifier — used to join related rows later |
 | `company` | Company name |
 | `description` | Whatever blurb you have on them |
-| `website_summary` | A summary of their website / portfolio |
+| `content_types` | What kinds of content/video they make |
+| `client_industries` | Markets they serve — raw context, not `creative_dna` |
+| `visual_style_notes` | Anything about their visual style / look |
+| `projects` | Notable project types (context only, not names to drop in an email) |
+| `company_size` | e.g. "boutique," headcount, whatever you have |
+| `years_established` | Founder-longevity signal |
+| `location` | For context |
 | `contact_name` | The person you'd email |
 | `contact_title` | Their title — this is how the model infers who makes creative decisions |
-| `visual_style_notes` | Anything about their visual style / look |
-| `projects` | Notable project types (not names to drop in the email — context only) |
+| `email` | Passed through untouched to the final CSV, never shown to the model |
 | `website_url` | For your own reference |
+
+### Importing from another CRM/ICP-screening export
+
+If your source data has a different shape — e.g. a prior enrichment tool's
+export with columns like `companyDescription`, `contentTypes`,
+`icpContactName` — write a small mapper like `src/import_leads.py`
+(already set up for exactly that shape) rather than reshaping 1,469 rows by
+hand. It also filters out disqualified leads and intentionally does **not**
+carry forward another tool's own conclusions (an `outreachAngle` or
+`icpReason` column, say) as if they were evidence — see the file's
+docstring for why.
+
+```bash
+python src/import_leads.py --input /path/to/raw_export.csv
+```
 
 A synthetic (fake) example file is at `examples/sample_leads.csv` — use it to
 smoke-test the pipeline before pointing it at real data. `input/enriched_leads.example.csv`

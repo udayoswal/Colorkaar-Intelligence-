@@ -19,15 +19,25 @@ SCHEMA_PATH = ROOT / "schemas" / "intelligence.schema.json"
 EXAMPLES_GOOD = ROOT / "examples" / "good"
 EXAMPLES_BAD = ROOT / "examples" / "bad"
 
+# Sent to the model as evidence.
 LEAD_FIELDS = [
     "company",
     "description",
-    "website_summary",
-    "contact_name",
-    "contact_title",
+    "content_types",
+    "client_industries",
     "visual_style_notes",
     "projects",
+    "company_size",
+    "years_established",
+    "location",
+    "contact_name",
+    "contact_title",
 ]
+
+# Carried through onto the output record untouched - not shown to the
+# model, but needed later so a human can actually act on a row without
+# rejoining files (who to email, what stage they're already at).
+PASSTHROUGH_FIELDS = ["contact_name", "contact_title", "email", "website_url", "stage"]
 
 
 def load_few_shot_examples() -> str:
@@ -100,15 +110,15 @@ def main() -> None:
                 continue
 
             result["lead_id"] = row.get("lead_id")
-            for key in ("relationship_score", "confidence"):
-                result[key] = max(0, min(100, int(result.get(key, 0))))
+            for field in PASSTHROUGH_FIELDS:
+                result[field] = (row.get(field) or "").strip()
 
             out.write(json.dumps(result) + "\n")
             out.flush()
             processed += 1
             print(
                 f"[{i}/{len(rows)}] {result['company']} -> {result['studio_archetype']} "
-                f"| llm priority {result['priority']} (confidence {result['confidence']})"
+                f"| llm priority {result['outreach_priority']} (confidence {result['confidence']})"
             )
 
     print(f"\nDone. {processed}/{len(rows)} leads analyzed -> {output_path}")

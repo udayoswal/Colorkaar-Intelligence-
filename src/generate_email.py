@@ -82,9 +82,12 @@ def main() -> None:
             for field in LIST_FIELDS:
                 values[field] = ", ".join(record.get(field) or []) or "none"
 
+            # Prefer contact info already carried on the record (passed
+            # through by analyze.py); fall back to the leads CSV for older
+            # records that predate that passthrough.
             contact = contacts.get(str(record.get("lead_id")), {})
-            values["contact_name"] = contact.get("contact_name") or values.get("contact_name", "UNKNOWN")
-            values["contact_title"] = contact.get("contact_title") or values.get("contact_title", "UNKNOWN")
+            values["contact_name"] = record.get("contact_name") or contact.get("contact_name") or "UNKNOWN"
+            values["contact_title"] = record.get("contact_title") or contact.get("contact_title") or "UNKNOWN"
 
             user = render_template(user_template, values)
 

@@ -15,6 +15,12 @@ ROOT = Path(__file__).resolve().parent.parent
 INTELLIGENCE_COLUMNS = [
     "lead_id",
     "company",
+    "contact_name",
+    "contact_title",
+    "email",
+    "stage",
+    "outreach_priority",
+    "confidence",
     "studio_archetype",
     "operating_model",
     "studio_personality",
@@ -27,8 +33,7 @@ INTELLIGENCE_COLUMNS = [
     "conversation_starter",
     "avoid",
     "why_this_lead",
-    "outreach_priority",
-    "confidence",
+    "website_url",
 ]
 
 EMAIL_COLUMNS = [
