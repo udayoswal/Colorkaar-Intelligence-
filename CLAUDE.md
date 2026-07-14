@@ -1,15 +1,22 @@
-# Colorkaar Intelligence Engine
+# Colorkaar Lead Intelligence Database
 
-This file is how Claude (and any engineer) should think about this repository.
-It is not how Claude should write — that's `prompts/email.md`. This is how
-Claude should *understand*.
+This is not an email enrichment tool. It's a database of who Colorkaar's
+leads actually are — the kind of asset that keeps compounding in value
+across outreach, networking, proposals, and client development, long after
+any one email template has been rewritten. Emails are just the first thing
+built on top of it.
+
+This file is how Claude (and any engineer) should think about this
+repository. It is not how Claude should write — that's `prompts/email.md`.
+This is how Claude should *understand*.
 
 ## Mission
 
 You are not an email writer. You are a Business Development Strategist for
 Colorkaar, a boutique color grading and finishing studio. Your job is to
 understand creative businesses well enough that a producer could trust your
-read on them.
+read on them — and to write that understanding down as something scannable,
+like a CRM card, not a report.
 
 - You never invent facts. You reason from evidence given to you.
 - When evidence is weak, you lower confidence — you do not compensate with
@@ -19,6 +26,9 @@ read on them.
   materially strengthens the relationship (rare — almost never).
 - You always optimize for long-term relationships over short-term replies.
 - Think like a producer. Write like a filmmaker.
+- **The shorter a field is, the more useful it is.** If a field reads like
+  a sentence explaining itself, it's wrong. See `prompts/system.md` →
+  "The compression rule."
 
 The single most important sentence in this whole repo:
 
@@ -35,17 +45,22 @@ stages. Each stage has one job:
 | Stage | Script | Input | Output | Job |
 |---|---|---|---|---|
 | Analyze | `src/analyze.py` | `input/enriched_leads.csv` | `output/lead_intelligence.raw.jsonl` | Understand the company. LLM call, structured JSON output. |
-| Score | `src/score.py` | `*.raw.jsonl` | `*.scored.jsonl` | Apply the relationship-score and priority rubric **deterministically**, in code — not vibes, not a second LLM call. |
+| Score | `src/score.py` | `*.raw.jsonl` | `*.scored.jsonl` | Apply the outreach-priority rubric **deterministically**, in code — not vibes, not a second LLM call. |
 | Generate email | `src/generate_email.py` | `*.scored.jsonl` | `output/emails.raw.jsonl` | Only after intelligence exists. LLM call, structured JSON output. |
 | Export | `src/export.py` | both `*.jsonl` | `output/lead_intelligence.csv`, `output/emails.csv` | Join, drop the `reasoning` debug field, produce the deliverable CSVs. |
 
-Scoring is deliberately **not** left to the model. `studio_archetype` →
-`relationship_score` → `priority` is a fixed lookup table in `src/score.py`
-(mirrored in `prompts/scorer.md`). The model proposes a score as part of its
-analysis (useful signal, kept in the record as `llm_relationship_score` /
-`llm_priority`), but the exported number always comes from the rubric. This
-is what makes the scoring auditable and tunable without re-prompting 1,469
-leads every time you want to change what "A+" means.
+Scoring is deliberately **not** left to the model, and it is deliberately
+**not a number**. `studio_archetype` × `confidence` → `outreach_priority`
+(Immediate / High / Medium / Low) is a fixed lookup table in `src/score.py`
+(mirrored in `prompts/scorer.md`). There is no `relationship_score` field —
+an earlier version had one (0-100) and it was cut on purpose: a number
+implies a precision that doesn't exist and invites treating "93" and "95"
+as meaningfully different when they aren't. The model still proposes a
+priority as part of its analysis (useful signal, kept in the record as
+`llm_outreach_priority`), but the exported priority always comes from the
+rubric. This is what makes the scoring auditable and tunable without
+re-prompting 1,469 leads every time you want to change what "Immediate"
+means.
 
 ## The `reasoning` field
 
@@ -81,7 +96,7 @@ README.md                  — setup + how to run
 prompts/
   system.md                — the durable system prompt for the analyzer (cached, stable)
   analyzer.md               — per-lead user-message template for the analyzer
-  scorer.md                  — the relationship-score / priority rubric (mirrors src/score.py)
+  scorer.md                  — the outreach-priority rubric (mirrors src/score.py)
   email.md                   — system prompt + user template for email generation
 schemas/
   intelligence.schema.json   — structured-output schema for the analyzer
@@ -112,3 +127,13 @@ lead. If you catch the model doing this, it's a prompt bug — fix
 Human Angle is exactly one thing, not three. "Founder-led boutique" is good.
 "Award-winning, passionate, visual storytellers" is the failure mode this
 whole system exists to prevent.
+
+Never let a field turn back into a sentence. `creative_dna`, `visual_dna`,
+`operating_model`, `studio_personality`, `buyer_personality`, and `avoid`
+are all short tag arrays — 2-5 words each, not clauses. `colorkaar_angle` is
+a phrase, not a sentence with an em-dash explaining itself. `creative_dna`
+is aesthetic vocabulary (Minimal, Raw, Naturalistic, Luxury...), never a
+market/industry word (Outdoor, Automotive, Tech, Retail) — market context
+belongs in the raw evidence, not in this field. `confidence` and
+`outreach_priority` are categories (High/Medium/Low,
+Immediate/High/Medium/Low) — never a number, ever again.

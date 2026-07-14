@@ -1,8 +1,10 @@
-# Colorkaar Intelligence Engine
+# Colorkaar Lead Intelligence Database
 
-The best lead intelligence engine for a boutique creative studio. Not a
-prompt — a small pipeline: understand the company, score it deterministically,
-write one email, export.
+The best lead intelligence engine for a boutique creative studio. Not an
+email enrichment tool, and not a prompt — a small pipeline that builds a
+database of who your leads actually are: understand the company, score it
+deterministically, write one email, export. The database is the asset; the
+emails are just the first thing built on top of it.
 
 Read `CLAUDE.md` first — it explains the philosophy and the iteration
 discipline this repo is built around. This file is just setup and commands.
@@ -59,7 +61,7 @@ Once you're happy:
 ```bash
 python src/analyze.py --input input/enriched_leads.csv --limit 1469
 python src/score.py
-python src/generate_email.py --priority A+ A B
+python src/generate_email.py --priority Immediate High Medium
 python src/export.py
 ```
 
@@ -69,12 +71,12 @@ python src/export.py
   matching `schemas/intelligence.schema.json`. Flags: `--input`, `--output`,
   `--limit` (default 25), `--start` (resume partway through a file), `--model`.
 - **`src/score.py`** — no LLM call. Applies the deterministic rubric in
-  `prompts/scorer.md` to compute `relationship_score` and `priority` from
-  `studio_archetype`, gated by `confidence`. Reads `*.raw.jsonl`, writes
-  `*.scored.jsonl`.
+  `prompts/scorer.md` to compute `outreach_priority` (Immediate / High /
+  Medium / Low — no numeric score) from `studio_archetype` and `confidence`.
+  Reads `*.raw.jsonl`, writes `*.scored.jsonl`.
 - **`src/generate_email.py`** — one Claude call per lead, only for leads that
-  already have intelligence. Flags: `--priority A+ A` to only email your best
-  leads, `--limit`.
+  already have intelligence. Flags: `--priority Immediate High` to only
+  email your best leads, `--limit`.
 - **`src/export.py`** — joins everything, drops the debug `reasoning` field,
   writes the two CSVs BD actually reads.
 

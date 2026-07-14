@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""Stage 2: deterministic scoring. No LLM call. See prompts/scorer.md for the rubric.
+"""Stage 2: deterministic outreach priority. No LLM call, no numeric score.
+
+See prompts/scorer.md for the rubric this implements.
 
 Usage:
     python src/score.py
@@ -13,48 +15,42 @@ ROOT = Path(__file__).resolve().parent.parent
 
 # Ordered so more-specific keywords (e.g. "dp-led") are checked before
 # generic ones — keep this in sync with prompts/scorer.md.
-ARCHETYPE_RULES = [
-    (("dp-led", "dp led", "cinematographer-led", "director + dp", "director/dp"), "DP-led", 98),
-    (("founder-led", "founder led", "boutique"), "founder-led boutique", 95),
-    (("agency",), "agency", 82),
-    (("huge production", "large production", "production company"), "huge production company", 71),
+ARCHETYPE_KEYWORDS = [
+    (("dp-led", "dp led", "cinematographer-led", "director + dp", "director/dp"), "dp_led"),
+    (("founder-led", "founder led", "boutique"), "founder_led_boutique"),
+    (("agency",), "agency"),
+    (("huge production", "large production", "production company"), "huge_production"),
 ]
-UNKNOWN_SCORE = 30
 
-PRIORITY_THRESHOLDS = [
-    (95, "A+"),
-    (85, "A"),
-    (65, "B"),
-    (40, "C"),
-]
-LOW_CONFIDENCE_THRESHOLD = 40
+# archetype -> {confidence -> outreach_priority}. Mirrors the table in
+# prompts/scorer.md exactly; if you change one, change both.
+PRIORITY_TABLE = {
+    "dp_led": {"High": "Immediate", "Medium": "High", "Low": "Medium"},
+    "founder_led_boutique": {"High": "Immediate", "Medium": "High", "Low": "Medium"},
+    "agency": {"High": "High", "Medium": "Medium", "Low": "Low"},
+    "huge_production": {"High": "Medium", "Medium": "Low", "Low": "Low"},
+    "unknown": {"High": "Low", "Medium": "Low", "Low": "Low"},
+}
 
 
-def base_score(studio_archetype: str) -> int:
+def archetype_bucket(studio_archetype: str) -> str:
     archetype = (studio_archetype or "").lower()
-    for keywords, _label, score in ARCHETYPE_RULES:
+    for keywords, bucket in ARCHETYPE_KEYWORDS:
         if any(kw in archetype for kw in keywords):
-            return score
-    return UNKNOWN_SCORE
+            return bucket
+    return "unknown"
 
 
-def priority_for(score: int, confidence: int) -> str:
-    if confidence < LOW_CONFIDENCE_THRESHOLD:
-        # Thin evidence should never produce an "immediate outreach" tier,
-        # even if the archetype match happened to land on a high base score.
-        return "C" if score >= 60 else "D"
-    for threshold, label in PRIORITY_THRESHOLDS:
-        if score >= threshold:
-            return label
-    return "D"
+def priority_for(studio_archetype: str, confidence: str) -> str:
+    bucket = archetype_bucket(studio_archetype)
+    confidence = confidence if confidence in ("High", "Medium", "Low") else "Low"
+    return PRIORITY_TABLE[bucket][confidence]
 
 
 def score_record(record: dict) -> dict:
     scored = dict(record)
-    scored["llm_relationship_score"] = record.get("relationship_score")
-    scored["llm_priority"] = record.get("priority")
-    scored["relationship_score"] = base_score(record.get("studio_archetype", ""))
-    scored["priority"] = priority_for(scored["relationship_score"], int(record.get("confidence", 0)))
+    scored["llm_outreach_priority"] = record.get("outreach_priority")
+    scored["outreach_priority"] = priority_for(record.get("studio_archetype", ""), record.get("confidence", "Low"))
     return scored
 
 
@@ -78,7 +74,7 @@ def main() -> None:
     with output_path.open("w") as out:
         for record in records:
             scored = score_record(record)
-            if scored["priority"] != scored["llm_priority"]:
+            if scored["outreach_priority"] != scored["llm_outreach_priority"]:
                 disagreements += 1
             out.write(json.dumps(scored) + "\n")
 

@@ -6,12 +6,12 @@ Built from `examples/good/founder_led_boutique.md`.
 {
   "company": "Northlight Films",
   "subject": "A question about your location work",
-  "body": "Hi Mara,\n\nI run color at Colorkaar and spend a lot of time looking at studios that shoot on location — your outdoor work has a consistent, restrained look that's harder to hold onto across a whole campaign than it looks.\n\nI'm curious how you're currently handling the grade on longer shoots, and whether that's something worth a short call about.\n\nUday",
+  "body": "Hi Mara,\n\nI run color at Colorkaar and spend a lot of time looking at studios that shoot on location - your outdoor work has a consistent, restrained look that's harder to hold onto across a whole campaign than it looks.\n\nI'm curious how you're currently handling the grade on longer shoots, and whether that's something worth a short call about.\n\nUday",
   "human_angle_used": "Founder still shoots",
-  "colorkaar_angle_used": "Founder to founder — a long-term grading partner who understands the look rather than a vendor",
-  "conversation_starter_used": "Developing a consistent look across location-shot work",
-  "confidence": 78,
-  "reasoning": "Built around the location-shooting consistency observation from visual_dna and the founder-to-founder framing from colorkaar_angle. Kept short and low-pressure given confidence is 78, not higher."
+  "colorkaar_angle_used": "A long-term partner, not a vendor",
+  "conversation_starter_used": "Developing a consistent look on location",
+  "confidence": "Medium",
+  "reasoning": "Built around the location-shooting consistency observation from visual_dna and the founder-to-founder framing from colorkaar_angle. Kept short and low-pressure given confidence is Medium, not High."
 }
 ```
 

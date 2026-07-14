@@ -2,7 +2,7 @@
 """Stage 3: write one email per lead, only after intelligence exists.
 
 Usage:
-    python src/generate_email.py --priority A+ A
+    python src/generate_email.py --priority Immediate High
 """
 
 import argparse
@@ -19,17 +19,16 @@ SCHEMA_PATH = ROOT / "schemas" / "email.schema.json"
 TEMPLATE_FIELDS = [
     "company",
     "studio_archetype",
-    "operating_model",
     "decision_maker",
-    "buyer_personality",
     "human_angle",
     "colorkaar_angle",
     "conversation_starter",
-    "priority",
+    "outreach_priority",
+    "confidence",
     "contact_name",
     "contact_title",
 ]
-LIST_FIELDS = ["creative_dna", "visual_dna", "avoid"]
+LIST_FIELDS = ["operating_model", "studio_personality", "creative_dna", "visual_dna", "buyer_personality", "avoid", "why_this_lead"]
 
 
 def load_contacts(leads_csv: Path) -> dict[str, dict]:
@@ -44,7 +43,7 @@ def main() -> None:
     parser.add_argument("--input", default=str(ROOT / "output" / "lead_intelligence.scored.jsonl"))
     parser.add_argument("--output", default=str(ROOT / "output" / "emails.raw.jsonl"))
     parser.add_argument("--leads-csv", default=str(ROOT / "input" / "enriched_leads.csv"), help="Used to fill in contact_name/contact_title if not carried on the intelligence record.")
-    parser.add_argument("--priority", nargs="*", default=None, help="Only email leads with these priorities, e.g. --priority A+ A")
+    parser.add_argument("--priority", nargs="*", default=None, help="Only email leads with these priorities, e.g. --priority Immediate High")
     parser.add_argument("--limit", type=int, default=None)
     parser.add_argument("--model", default=None)
     args = parser.parse_args()
@@ -65,7 +64,7 @@ def main() -> None:
                 records.append(json.loads(line))
 
     if args.priority:
-        records = [r for r in records if r.get("priority") in args.priority]
+        records = [r for r in records if r.get("outreach_priority") in args.priority]
     if args.limit:
         records = records[: args.limit]
 
@@ -81,8 +80,6 @@ def main() -> None:
                 values[field] = str(record.get(field, "UNKNOWN"))
             for field in LIST_FIELDS:
                 values[field] = ", ".join(record.get(field) or []) or "none"
-            values["relationship_score"] = str(record.get("relationship_score", ""))
-            values["confidence"] = str(record.get("confidence", ""))
 
             contact = contacts.get(str(record.get("lead_id")), {})
             values["contact_name"] = contact.get("contact_name") or values.get("contact_name", "UNKNOWN")
@@ -104,7 +101,7 @@ def main() -> None:
                 continue
 
             result["lead_id"] = record.get("lead_id")
-            result["priority"] = record.get("priority")
+            result["outreach_priority"] = record.get("outreach_priority")
             out.write(json.dumps(result) + "\n")
             out.flush()
             print(f"[{i}/{len(records)}] {result['company']} -> \"{result['subject']}\"")

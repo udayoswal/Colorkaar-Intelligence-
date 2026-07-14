@@ -17,6 +17,7 @@ INTELLIGENCE_COLUMNS = [
     "company",
     "studio_archetype",
     "operating_model",
+    "studio_personality",
     "creative_dna",
     "visual_dna",
     "decision_maker",
@@ -25,17 +26,16 @@ INTELLIGENCE_COLUMNS = [
     "colorkaar_angle",
     "conversation_starter",
     "avoid",
-    "priority",
-    "relationship_score",
+    "why_this_lead",
+    "outreach_priority",
     "confidence",
-    "llm_priority",
-    "llm_relationship_score",
+    "llm_outreach_priority",
 ]
 
 EMAIL_COLUMNS = [
     "lead_id",
     "company",
-    "priority",
+    "outreach_priority",
     "subject",
     "body",
     "human_angle_used",
@@ -44,7 +44,7 @@ EMAIL_COLUMNS = [
     "confidence",
 ]
 
-LIST_FIELDS = {"creative_dna", "visual_dna", "avoid"}
+LIST_FIELDS = {"operating_model", "studio_personality", "creative_dna", "visual_dna", "buyer_personality", "avoid", "why_this_lead"}
 
 
 def load_jsonl(path: Path) -> list[dict]:

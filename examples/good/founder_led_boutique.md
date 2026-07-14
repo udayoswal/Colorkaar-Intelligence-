@@ -19,24 +19,27 @@ Projects: Outdoor apparel campaigns, a handful of documentary shorts.
 {
   "company": "Northlight Films",
   "studio_archetype": "founder-led boutique",
-  "operating_model": "Small team, founder-directed, founder shoots personally",
-  "creative_dna": ["Outdoor/apparel specialist", "Location-first production"],
-  "visual_dna": ["Cool, desaturated, high-contrast look", "Minimal visible grading"],
-  "decision_maker": "Founder (Mara) — creative and business decisions likely sit with one person",
-  "buyer_personality": "Likely values a direct relationship over a sales process; small team means fast decisions",
+  "operating_model": ["Founder-led boutique", "Owner-operated"],
+  "studio_personality": ["Independent", "Hands-on", "Relationship-driven"],
+  "creative_dna": ["Naturalistic", "Restrained"],
+  "visual_dna": ["Desaturated", "High-contrast", "Clean"],
+  "decision_maker": "Founder (Mara)",
+  "buyer_personality": ["Relationship-driven", "Fast decisions"],
   "human_angle": "Founder still shoots",
-  "colorkaar_angle": "Founder to founder — a long-term grading partner who understands the look rather than a vendor",
-  "conversation_starter": "Developing a consistent look across location-shot work",
-  "avoid": ["High-volume commercial throughput pitch — this is a boutique, not a volume shop"],
-  "priority": "A",
-  "relationship_score": 93,
-  "confidence": 78,
-  "reasoning": "Two-person structure and founder-as-director are both directly stated, so human_angle is high-confidence. Visual DNA is inferred from the described look, not from seeing actual footage, so confidence is not higher than 78."
+  "colorkaar_angle": "A long-term partner, not a vendor",
+  "conversation_starter": "Developing a consistent look on location",
+  "avoid": ["Volume framing", "Sales process"],
+  "why_this_lead": ["Founder-led", "Image-first", "No visible in-house grading", "Relationship-driven"],
+  "outreach_priority": "High",
+  "confidence": "Medium",
+  "reasoning": "Two-person structure and founder-as-director are both directly stated, so human_angle is high-confidence. Visual DNA is inferred from a described look, not seen footage, so overall confidence is Medium rather than High."
 }
 ```
 
-This is good because: `human_angle` is exactly one concrete thing ("Founder
-still shoots"), not a list of adjectives. `colorkaar_angle` maps founder to
-founder — specific to this company's structure, not a generic pitch.
-`conversation_starter` is a real topic, not a compliment. Nothing here
-mentions awards, named clients, or "storytelling."
+This is good because: `human_angle` is exactly one concrete thing, not a
+list of adjectives. `colorkaar_angle` is four words, not a sentence that
+explains itself. `creative_dna` is aesthetic ("Naturalistic," "Restrained")
+rather than market ("outdoor," "apparel") — the market context lives in the
+raw evidence, not in this field. Every array field is short tags, not
+clauses. `confidence` and `outreach_priority` are categories, not numbers.
+Nothing here mentions awards, named clients, or "storytelling."

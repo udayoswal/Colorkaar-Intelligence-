@@ -37,8 +37,9 @@
       "description": "The conversation_starter this email opens with."
     },
     "confidence": {
-      "type": "integer",
-      "description": "0-100. Carried forward from the intelligence profile, adjusted if the email required more inference."
+      "type": "string",
+      "enum": ["High", "Medium", "Low"],
+      "description": "Carried forward from the intelligence profile, adjusted if the email required more inference."
     },
     "reasoning": {
       "type": "string",

@@ -5,6 +5,7 @@
     "company",
     "studio_archetype",
     "operating_model",
+    "studio_personality",
     "creative_dna",
     "visual_dna",
     "decision_maker",
@@ -13,8 +14,8 @@
     "colorkaar_angle",
     "conversation_starter",
     "avoid",
-    "priority",
-    "relationship_score",
+    "why_this_lead",
+    "outreach_priority",
     "confidence",
     "reasoning"
   ],
@@ -25,59 +26,68 @@
     },
     "studio_archetype": {
       "type": "string",
-      "description": "One of: founder-led boutique, DP-led, agency, huge production company, unknown. Phrase naturally but keep one of these families identifiable."
+      "description": "One short phrase: founder-led boutique, DP-led, agency, huge production company, or unknown."
     },
     "operating_model": {
-      "type": "string",
-      "description": "How this company actually works day to day, based on evidence. UNKNOWN if unsupported."
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "2-3 short tags, not a sentence. e.g. [\"Founder-led boutique\", \"Owner-operated\"]. Empty array if unsupported."
+    },
+    "studio_personality": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "2-3 short tags describing how you'd work with them day to day. e.g. [\"Independent\", \"Hands-on\", \"Relationship-driven\"] or [\"Structured\", \"Process-driven\", \"Scalable\"]. Empty array if unsupported."
     },
     "creative_dna": {
       "type": "array",
       "items": { "type": "string" },
-      "description": "Short, specific, evidence-based observations about their creative identity. Empty array if none supported."
+      "description": "Aesthetic sensibility, NOT market or industry. Good: Minimal, Raw, Performance, Luxury, Character-driven, Adventure, Naturalistic, Lifestyle, Graphic. Bad: Outdoor, Automotive, Tech, Retail - those are markets, not creative DNA. 2-4 tags. Empty array if unsupported."
     },
     "visual_dna": {
       "type": "array",
       "items": { "type": "string" },
-      "description": "Short, specific, evidence-based observations about their visual style. Empty array if none supported."
+      "description": "Visual style as single/double-word tags. Good: Naturalistic, Filmic, Textured, Restrained, Graphic, Clean, Elegant, Bold, Raw. Bad: full sentences describing an image. Max 5 tags. Empty array if unsupported."
     },
     "decision_maker": {
       "type": "string",
-      "description": "Who makes creative decisions here, inferred from contact title and evidence. UNKNOWN if unsupported."
+      "description": "Name and/or title only, short. e.g. \"Founder (Mara)\". UNKNOWN if unsupported."
     },
     "buyer_personality": {
-      "type": "string",
-      "description": "How this company is likely to evaluate and buy a service like Colorkaar's. UNKNOWN if unsupported."
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "2-3 short tags on how they evaluate and decide. e.g. [\"Relationship-driven\", \"Craft-first\", \"Founder-led decisions\"]. Empty array if unsupported."
     },
     "human_angle": {
       "type": "string",
-      "description": "Exactly ONE concrete, specific human observation. Never a generic compliment. UNKNOWN if unsupported."
+      "description": "Exactly ONE concrete, specific human observation, a few words. Never a generic compliment. UNKNOWN if unsupported."
     },
     "colorkaar_angle": {
       "type": "string",
-      "description": "One sentence: why Colorkaar specifically matters to this company. Not an email."
+      "description": "A short punchy phrase, roughly 3-8 words, on why Colorkaar specifically matters here. Not a sentence that explains itself with an em-dash. Not an email."
     },
     "conversation_starter": {
       "type": "string",
-      "description": "A specific topic to open a conversation with, not a compliment."
+      "description": "A specific topic to open with, a few words, not a compliment."
     },
     "avoid": {
       "type": "array",
       "items": { "type": "string" },
-      "description": "Topics, comparisons, or tones that would misread the room with this specific lead."
+      "description": "Short tags (1-3 words each) for topics/tones that would misread the room. e.g. [\"Pricing\", \"Awards\", \"Volume framing\"]. Not sentences."
     },
-    "priority": {
+    "why_this_lead": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "3-5 short bullets synthesizing the case for outreach - the gut-check a producer reads before deciding whether to write at all. e.g. [\"Founder-led\", \"Image-first\", \"No internal grading\", \"Relationship-driven\"]."
+    },
+    "outreach_priority": {
       "type": "string",
-      "enum": ["A+", "A", "B", "C", "D"],
-      "description": "Your proposed priority tier. Recomputed deterministically downstream — reason honestly."
-    },
-    "relationship_score": {
-      "type": "integer",
-      "description": "Your proposed 0-100 relationship score. Recomputed deterministically downstream — reason honestly."
+      "enum": ["Immediate", "High", "Medium", "Low"],
+      "description": "Your proposed priority tier. Recomputed deterministically downstream from studio_archetype and confidence - reason honestly."
     },
     "confidence": {
-      "type": "integer",
-      "description": "0-100. How much of this analysis is grounded in real evidence vs. inference."
+      "type": "string",
+      "enum": ["High", "Medium", "Low"],
+      "description": "High: multiple facts stated directly. Medium: some facts stated, real inference required. Low: mostly inferred, thin evidence."
     },
     "reasoning": {
       "type": "string",
